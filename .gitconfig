@@ -1,3 +1,24 @@
+[core]
+	editor = "vim"
+[push]
+	default = simple
+[user]
+	name = "Khosrow Moossavi"
+	email = khos2ow@gmail.com
+[merge "ours"]
+	driver = true
+[alias]
+	ls = log --color --pretty=format:'%Cred%h%Creset - %Cgreen(%cr) %Creset-%C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset' --abbrev-commit --decorate
+	ll = log --color --pretty=format:'%Cred%h%Creset - %Cgreen(%cr) %Creset-%C(yellow)%d%Creset %s %C(bold blue)<%an (%ae)>%Creset' --abbrev-commit --decorate --numstat
+	top = !git ls | head -1
+	cl = log --color --pretty=format:'- %s%C(yellow)%d%C(reset)' --abbrev-commit --decorate
+	co = checkout
+	st = status
+	fp = !git fetch --all -p && git pull --tags
+	fa = !git fetch --all -p
+
+
+
 [alias]
 
 	# View abbreviated SHA, description, and history graph of the latest 20 commits

@@ -1,0 +1,3 @@
+# deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ cosmic main
+# deb https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ eoan main
+# deb-src https://packages.gitlab.com/runner/gitlab-runner/ubuntu/ cosmic main

@@ -1,0 +1,28 @@
+sudo apt update
+sudo apt upgrade
+sudo cp /path/to/backedup/source.list.d/* /etc/apt/source.list.d/
+sudo apt update
+# fix key issues
+for k in .... ; do sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $k ; done
+sudo apt update
+sudo apt upgrade
+
+
+
+
+    On the source machine:
+
+    cat /etc/apt/sources.list /etc/apt/sources.list.d >sources.list
+    dpkg --get-selections >selections.list
+    apt-mark showauto >auto.list
+
+    On the target machine:
+
+    cp sources.list /etc/apt/
+    apt-get update
+    /usr/lib/dpkg/methods/apt/update /var/lib/dpkg/
+    dpkg --set-selections <selections.list
+    apt-get dselect-upgrade
+    xargs apt-mark auto <auto.list
+
+
