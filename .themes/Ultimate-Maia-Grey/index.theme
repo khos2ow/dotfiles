@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=X-GNOME-Metatheme
+Name=Ultimate-Maia-Grey
+Comment=Easy On The Eyes Gnome Theme
+Encoding=UTF-8
+
+[X-GNOME-Metatheme]
+GtkTheme=Ultimate-Maia-Grey
+ButtonLayout=:minimize,maximize,close
