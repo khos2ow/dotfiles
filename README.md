@@ -7,12 +7,12 @@
 <!-- toc -->
 
 - [About](#about)
-  * [Installing](#installing)
-  * [Customizing](#customizing)
+  - [Installing](#installing)
+  - [Customizing](#customizing)
 - [Resources](#resources)
-  * [`.vim`](#vim)
+  - [`.vim`](#vim)
 - [Contributing](#contributing)
-  * [Running the tests](#running-the-tests)
+  - [Running the tests](#running-the-tests)
 
 <!-- tocstop -->
 
@@ -21,7 +21,7 @@
 ### Installing
 
 ```console
-$ make
+make
 ```
 
 This will create symlinks from this repo to your home folder.
@@ -68,5 +68,5 @@ The tests use [shellcheck](https://github.com/koalaman/shellcheck). You don't
 need to install anything. They run in a container.
 
 ```console
-$ make test
+make test
 ```
