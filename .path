@@ -1,13 +1,37 @@
 #!/bin/sh
 
+# # set PATH so it includes user's private bin if it exists
+# if [ -d "$HOME/bin" ] ; then
+#     PATH="$HOME/bin:$PATH"
+# fi
+
+# # set PATH so it includes user's private bin if it exists
+# if [ -d "$HOME/.local/bin" ] ; then
+#     PATH="$HOME/.local/bin:$PATH"
+# fi
+
+# go root
+export GOROOT=/usr/local/lib/go/go-latest
+
 # go path
-export GOPATH="${HOME}/.go"
+export GOPATH="${HOME}/work/go"
 
 # update path
 export PATH=/usr/local/bin:${PATH}:/sbin
 
 # add go path
-export PATH="/usr/local/go/bin:${GOPATH}/bin:${PATH}"
+export PATH="${GOROOT}/bin:${GOPATH}/bin:${PATH}"
+
+# java
+export JAVA_HOME=/usr/lib/jvm/default-java
+
+# chef
+# export PATH=$PATH:~/.chefdk/gem/ruby/2.5.0/bin
+# eval "$(chef shell-init bash)"
+# export PATH="/opt/chefdk/embedded/bin:$PATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+# export PATH="$PATH:$HOME/.rvm/bin"
 
 # add rust path
 export PATH="${HOME}/.cargo/bin:${PATH}"

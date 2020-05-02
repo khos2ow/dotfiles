@@ -9,6 +9,17 @@ case $- in
 	*) return;;
 esac
 
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
@@ -27,7 +38,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-	xterm-color) color_prompt=yes;;
+	xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -61,6 +72,15 @@ case "$TERM" in
 	*)
 		;;
 esac
+
+# Only load Liquid Prompt in interactive shells, not from a script or from scp
+for file in ~/.{bash_prompt_k8s,bash_prompt_swift,liquidprompt/liquidprompt}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -101,26 +121,6 @@ if [[ -d /etc/bash_completion.d/ ]]; then
 	done
 fi
 
-# Start the gpg-agent if not already running
-if ! pgrep -x -u "${USER}" gpg-agent >/dev/null 2>&1; then
-	gpg-connect-agent /bye >/dev/null 2>&1
-fi
-gpg-connect-agent updatestartuptty /bye >/dev/null
-# use a tty for gpg
-# solves error: "gpg: signing failed: Inappropriate ioctl for device"
-GPG_TTY=$(tty)
-export GPG_TTY
-# Set SSH to use gpg-agent
-unset SSH_AGENT_PID
-if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
-	if [[ -z "$SSH_AUTH_SOCK" ]] || [[ "$SSH_AUTH_SOCK" == *"apple.launchd"* ]]; then
-		SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-		export SSH_AUTH_SOCK
-	fi
-fi
-# add alias for ssh to update the tty
-alias ssh="gpg-connect-agent updatestartuptty /bye >/dev/null; ssh"
-
 # Case-insensitive globbing (used in pathname expansion)
 shopt -s nocaseglob
 
@@ -151,13 +151,40 @@ if hash kubectl 2>/dev/null; then
 	source <(kubectl completion bash)
 fi
 
-# source travis bash completion
-if [[ -f "${HOME}/.travis/travis.sh" ]]; then
+# source kind bash completion
+if hash kind 2>/dev/null; then
 	# shellcheck source=/dev/null
-	source "${HOME}/.travis/travis.sh"
+	source <(kind completion bash)
 fi
 
-for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
+# source helm bash completion
+if hash helm 2>/dev/null; then
+	# shellcheck source=/dev/null
+	source <(helm completion bash)
+fi
+
+# source terraform-docs bash completion
+if hash terraform-docs 2>/dev/null; then
+	# shellcheck source=/dev/null
+	source <(terraform-docs completion bash)
+fi
+
+# HashiCorp autocomplete
+if hash packer 2>/dev/null; then
+	complete -C /usr/local/bin/packer packer
+fi
+if hash terraform 2>/dev/null; then
+	complete -C /usr/local/bin/terraform terraform
+fi
+if hash vagrant 2>/dev/null; then
+	complete -C /usr/local/bin/vagrant vagrant
+fi
+if hash vault 2>/dev/null; then
+	complete -C /usr/local/bin/vault vault
+fi
+
+
+for file in ~/.{aliases,functions,path,dockerfunc,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
@@ -165,3 +192,17 @@ for file in ~/.{bash_prompt,aliases,functions,path,dockerfunc,extra,exports}; do
 done
 unset file
 
+#sh /usr/bin/scrolling
+
+if [[ -r ~/.kube/config ]] && [[ -f ~/.kube/config ]]; then
+	eksport ~/.kube/config
+fi
+
+# asdf
+for file in ~/.asdf/{asdf.sh,completions/asdf.bash}; do
+	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+done
+unset file

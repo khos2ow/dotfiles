@@ -31,6 +31,7 @@ SWIFT_PS1_USER_COLOR="${SWIFT_PS1_USER_COLOR-red}"
 SWIFT_PS1_TENANT_COLOR="${SWIFT_PS1_TENANT_COLOR-cyan}"
 SWIFT_PS1_BG_COLOR="${SWIFT_PS1_BG_COLOR}"
 SWIFT_PS1_DISABLE_PATH="${HOME}/.swift/swift-ps1/disabled"
+# shellcheck disable=SC2034
 SWIFT_PS1_LAST_TIME=0
 
 # Determine our shell
@@ -126,7 +127,7 @@ _swift_ps1_color_bg() {
       SWIFT_PS1_BG_CODE="${DEFAULT_BG}"
     fi
   fi
-  echo ${OPEN_ESC}${SWIFT_PS1_BG_CODE}${CLOSE_ESC}
+  echo "${OPEN_ESC}""${SWIFT_PS1_BG_CODE}""${CLOSE_ESC}"
 }
 
 # Set swift-ps1 shell defaults
@@ -150,7 +151,7 @@ unsource_swift() {
 }
 
 # Build our prompt
-swift_ps1() {
+_swift_ps1() {
   [[ "${SWIFT_PS1_ENABLED}" == "off" ]] && return
   [[ -z "${OS_PROJECT_NAME}" ]] && [[ -z "${OS_TENANT_NAME}" ]] && [[ -z "${OS_USERNAME}" ]] && return
 
@@ -172,21 +173,21 @@ swift_ps1() {
   LOCAL_USER_NAME=$(echo "${OS_USERNAME}" | cut -d- -f2)
 
   # Background Color
-  [[ -n "${SWIFT_PS1_BG_COLOR}" ]] && SWIFT_PS1+="$(_swift_ps1_color_bg ${SWIFT_PS1_BG_COLOR})"
+  [[ -n "${SWIFT_PS1_BG_COLOR}" ]] && SWIFT_PS1+="$(_swift_ps1_color_bg "${SWIFT_PS1_BG_COLOR}")"
 
   # Prefix
   [[ -n "${SWIFT_PS1_PREFIX}" ]] && SWIFT_PS1+="${SWIFT_PS1_PREFIX}"
 
   # System
-  SWIFT_PS1+="$(_kube_ps1_color_fg $SWIFT_PS1_SYSTEM_COLOR)${LOCAL_SYSTEM_NAME}${SWIFT_PS1_RESET_COLOR}"
+  SWIFT_PS1+="$(_kube_ps1_color_fg "$SWIFT_PS1_SYSTEM_COLOR")${LOCAL_SYSTEM_NAME}${SWIFT_PS1_RESET_COLOR}"
   SWIFT_PS1+="${SWIFT_PS1_SEPARATOR}"
 
   # Username
-  SWIFT_PS1+="$(_kube_ps1_color_fg $SWIFT_PS1_USER_COLOR)${LOCAL_USER_NAME}${SWIFT_PS1_RESET_COLOR}"
+  SWIFT_PS1+="$(_kube_ps1_color_fg "$SWIFT_PS1_USER_COLOR")${LOCAL_USER_NAME}${SWIFT_PS1_RESET_COLOR}"
   SWIFT_PS1+="${SWIFT_PS1_DIVIDER}"
 
   # Project / Tenant
-  SWIFT_PS1+="$(_swift_ps1_color_fg ${SWIFT_PS1_TENANT_COLOR})${LOCAL_TENANT_NAME}${SWIFT_PS1_RESET_COLOR}"
+  SWIFT_PS1+="$(_swift_ps1_color_fg "${SWIFT_PS1_TENANT_COLOR}")${LOCAL_TENANT_NAME}${SWIFT_PS1_RESET_COLOR}"
 
   # Suffix
   [[ -n "${SWIFT_PS1_SUFFIX}" ]] && SWIFT_PS1+="${SWIFT_PS1_SUFFIX}"
