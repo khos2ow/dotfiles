@@ -1,6 +1,6 @@
 # dotfiles
 
-[![Travis CI](https://img.shields.io/travis/jessfraz/dotfiles.svg?style=for-the-badge)](https://travis-ci.org/jessfraz/dotfiles)
+[![Build Status](https://github.com/khos2ow/dotfiles/workflows/test/badge.svg)](https://github.com/khos2ow/dotfiles/actions)
 
 **Table of Contents**
 
