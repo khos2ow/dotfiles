@@ -1,8 +1,8 @@
 # Make Tab autocomplete regardless of filename case
-set completion-ignore-case on
+set completion-ignore-case off
 
 # List all matches in case multiple possible completions are possible
-set show-all-if-ambiguous on
+set show-all-if-ambiguous off
 
 # Immediately add a trailing slash when autocompleting symlinks to directories
 set mark-symlinked-directories on

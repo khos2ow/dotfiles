@@ -184,7 +184,7 @@ if hash vault 2>/dev/null; then
 fi
 
 
-for file in ~/.{aliases,functions,path,dockerfunc,extra,exports}; do
+for file in ~/.{aliases,functions,path,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
