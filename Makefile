@@ -46,6 +46,7 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.config/liquidpromptrc $(HOME)/.config/liquidpromptrc
 	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts
+	if [ ! -d $(HOME)/.liquidprompt ]; then git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; fi
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
