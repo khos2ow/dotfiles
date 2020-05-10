@@ -1,3 +1,16 @@
+.PHONY: gather
+gather:
+	cp $(HOME)/.gitconfig .
+
+	cp -r /etc/apt/sources.list.d .
+
+	git clone git@github.com:nojhan/liquidprompt.git $(HOME)/.liquidprompt
+	cp -r $(HOME)/.config/liquidprompt .config
+	cp $(HOME)/.config/liquidpromptrc .config
+
+	cp -r $(HOME)/.themes .
+
+
 .PHONY: all
 all: bin usr dotfiles etc ## Installs the bin and etc directory files and the dotfiles.
 
@@ -9,33 +22,31 @@ bin: ## Installs the bin directory files.
 		sudo ln -sf $$file /usr/local/bin/$$f; \
 	done
 
+# gpg --list-keys || true;
+# ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
+# ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
+# git update-index --skip-worktree $(CURDIR)/.gitconfig;
+# ln -snf $(CURDIR)/.themes $(HOME)/.themes;
+# fc-cache -f -v || true
+
 .PHONY: dotfiles
 dotfiles: ## Installs the dotfiles.
 	# add aliases for dotfiles
-	for file in $(shell find $(CURDIR) -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".github" -not -name ".*.swp" -not -name ".gnupg"); do \
+	@ for file in $(shell find $(CURDIR) -maxdepth 1 -not -path "$(CURDIR)" -name ".*" -not -name ".gitignore" -not -name ".travis.yml" -not -name ".git" -not -name ".*.swp" -not -name ".gnupg" -not -name ".config"); do \
 		f=$$(basename $$file); \
-		ln -sfn $$file $(HOME)/$$f; \
-	done; \
-	gpg --list-keys || true;
-	ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
-	ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
-	ln -fn $(CURDIR)/gitignore $(HOME)/.gitignore;
-	git update-index --skip-worktree $(CURDIR)/.gitconfig;
-	mkdir -p $(HOME)/.config;
-	ln -snf $(CURDIR)/.i3 $(HOME)/.config/sway;
-	mkdir -p $(HOME)/.local/share;
-	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts;
-	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile;
-	if [ -f /usr/local/bin/pinentry ]; then \
-		sudo ln -snf /usr/bin/pinentry /usr/local/bin/pinentry; \
-	fi;
-	mkdir -p $(HOME)/Pictures;
-	ln -snf $(CURDIR)/central-park.jpg $(HOME)/Pictures/central-park.jpg;
-	mkdir -p $(HOME)/.config/fontconfig;
-	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf;
-	xrdb -merge $(HOME)/.Xdefaults || true
-	xrdb -merge $(HOME)/.Xresources || true
-	fc-cache -f -v || true
+		ln -snf $$file $(HOME)/$$f; \
+		echo ln -snf $$file $(HOME)/$$f; \
+	done
+	mkdir -p $(HOME)/.config
+	mkdir -p $(HOME)/.config/fontconfig
+	mkdir -p $(HOME)/.local/share
+	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile
+	ln -snf $(CURDIR)/gitignore $(HOME)/.gitignore
+	ln -snf $(CURDIR)/.config/liquidprompt $(HOME)/.config/liquidprompt
+	ln -snf $(CURDIR)/.config/liquidpromptrc $(HOME)/.config/liquidpromptrc
+	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf
+	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts
+	if [ ! -d $(HOME)/.liquidprompt ]; then git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; fi
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
