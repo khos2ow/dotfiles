@@ -13,10 +13,6 @@ eksport() {
 
 # unset KUBECONFIG
 uneksport() {
-	if [ "$KUBECONFIG" == "/home/khosrow/.kube/config" ]; then
-		echo "Error: cannot unset KUBECONFIG. it's pointing to default ~/.kube/config"
-		return 1
-	fi
 	unset KUBECONFIG
 }
 
