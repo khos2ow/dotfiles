@@ -1,5 +1,44 @@
 #!/bin/bash
 
+# set KUBECONFIG based on the provided path
+eksport() {
+	if [ -z "$1" ]; then
+		echo "Usage: eksport /path/to/.kube/config-file.yaml"
+	elif [ ! -f "$1" ]; then
+		echo "Error: cannot find $1"
+	else
+		export KUBECONFIG=$1
+	fi
+}
+
+# unset KUBECONFIG
+uneksport() {
+	unset KUBECONFIG
+}
+
+# Cheat the commands, man alternative
+cheat() {
+	curl "http://cheat.sh/$1"
+}
+
+# Word meaning lookup
+lookup_word() {
+	if [ -z "$1" ]; then
+		echo "Usage: lookup_word <keyword>"
+	else
+		curl -q "dict://dict.org/d:$1"
+	fi
+}
+
+# cO - cca
+# r1forward() {
+# 	if [ -z "$1" -o -z "$2" -o -z "$3" ]; then
+# 		echo "Usage: r1forward <local_port> <remote_ip> <remote_ip>"
+# 	else
+# 		ssh -NL $1:$2:$3 cca-r1-linjump01;
+# 	fi
+# }
+
 # Simple calculator
 calc() {
 	local result=""
