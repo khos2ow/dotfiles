@@ -151,6 +151,12 @@ if hash kubectl 2>/dev/null; then
 	source <(kubectl completion bash)
 fi
 
+# source kops bash completion
+if hash kops 2>/dev/null; then
+	# shellcheck source=/dev/null
+	source <(kops completion bash)
+fi
+
 # source kind bash completion
 if hash kind 2>/dev/null; then
 	# shellcheck source=/dev/null
@@ -161,6 +167,12 @@ fi
 if hash helm 2>/dev/null; then
 	# shellcheck source=/dev/null
 	source <(helm completion bash)
+fi
+
+# source velero bash completion
+if hash velero 2>/dev/null; then
+	# shellcheck source=/dev/null
+	source <(velero completion bash)
 fi
 
 # source terraform-docs bash completion
