@@ -333,6 +333,7 @@ _kubeoff() {
 
 # Build our prompt
 _kube_ps1() {
+  [[ -z "$(command -v kubectl)" ]] && return
   [[ "${KUBE_PS1_ENABLED}" == "off" ]] && return
   [[ -z "${KUBE_PS1_CONTEXT}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
   [[ "${KUBE_PS1_CONTEXT}" == "N/A" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
