@@ -137,11 +137,11 @@ _kube_ps1_color_bg() {
       KUBE_PS1_BG_CODE="${DEFAULT_BG}"
     fi
   fi
-  echo ${OPEN_ESC}${KUBE_PS1_BG_CODE}${CLOSE_ESC}
+  echo "${OPEN_ESC}""${KUBE_PS1_BG_CODE}""${CLOSE_ESC}"
 }
 
 _kube_ps1_binary_check() {
-  command -v $1 >/dev/null
+  command -v "$1" >/dev/null
 }
 
 _kube_ps1_symbol() {
@@ -175,7 +175,7 @@ _kube_ps1_symbol() {
 _kube_ps1_split() {
   type setopt >/dev/null 2>&1 && setopt SH_WORD_SPLIT
   local IFS=$1
-  echo $2
+  echo "$2"
 }
 
 _kube_ps1_file_newer_than() {
@@ -239,8 +239,8 @@ _kube_ps1_get_context() {
     # Set namespace to 'N/A' if it is not defined
     KUBE_PS1_CONTEXT="${KUBE_PS1_CONTEXT:-N/A}"
 
-    if [[ ! -z "${KUBE_PS1_CLUSTER_FUNCTION}" ]]; then
-      KUBE_PS1_CONTEXT=$($KUBE_PS1_CLUSTER_FUNCTION $KUBE_PS1_CONTEXT)
+    if [[ -n "${KUBE_PS1_CLUSTER_FUNCTION}" ]]; then
+      KUBE_PS1_CONTEXT=$($KUBE_PS1_CLUSTER_FUNCTION "$KUBE_PS1_CONTEXT")
     fi
   fi
 }
@@ -251,8 +251,8 @@ _kube_ps1_get_ns() {
     # Set namespace to 'default' if it is not defined
     KUBE_PS1_NAMESPACE="${KUBE_PS1_NAMESPACE:-default}"
 
-    if [[ ! -z "${KUBE_PS1_NAMESPACE_FUNCTION}" ]]; then
-        KUBE_PS1_NAMESPACE=$($KUBE_PS1_NAMESPACE_FUNCTION $KUBE_PS1_NAMESPACE)
+    if [[ -n "${KUBE_PS1_NAMESPACE_FUNCTION}" ]]; then
+        KUBE_PS1_NAMESPACE=$($KUBE_PS1_NAMESPACE_FUNCTION "$KUBE_PS1_NAMESPACE")
     fi
   fi
 }
@@ -302,7 +302,7 @@ With no arguments, turn off kube-ps1 status for this shell instance (default).
 EOF
 }
 
-kubeon() {
+_kubeon() {
   if [[ "${1}" == '-h' || "${1}" == '--help' ]]; then
     _kubeon_usage
   elif [[ "${1}" == '-g' || "${1}" == '--global' ]]; then
@@ -316,7 +316,7 @@ kubeon() {
   KUBE_PS1_ENABLED=on
 }
 
-kubeoff() {
+_kubeoff() {
   if [[ "${1}" == '-h' || "${1}" == '--help' ]]; then
     _kubeoff_usage
   elif [[ "${1}" == '-g' || "${1}" == '--global' ]]; then
@@ -332,21 +332,23 @@ kubeoff() {
 }
 
 # Build our prompt
-kube_ps1() {
+_kube_ps1() {
+  [[ -z "$(command -v kubectl)" ]] && return
   [[ "${KUBE_PS1_ENABLED}" == "off" ]] && return
   [[ -z "${KUBE_PS1_CONTEXT}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
+  [[ "${KUBE_PS1_CONTEXT}" == "N/A" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
 
   local KUBE_PS1
   local KUBE_PS1_RESET_COLOR="${_KUBE_PS1_OPEN_ESC}${_KUBE_PS1_DEFAULT_FG}${_KUBE_PS1_CLOSE_ESC}"
 
   # Background Color
-  [[ -n "${KUBE_PS1_BG_COLOR}" ]] && KUBE_PS1+="$(_kube_ps1_color_bg ${KUBE_PS1_BG_COLOR})"
+  [[ -n "${KUBE_PS1_BG_COLOR}" ]] && KUBE_PS1+="$(_kube_ps1_color_bg "${KUBE_PS1_BG_COLOR}")"
 
   # Prefix
   [[ -n "${KUBE_PS1_PREFIX}" ]] && KUBE_PS1+="${KUBE_PS1_PREFIX}"
 
   # Symbol
-  KUBE_PS1+="$(_kube_ps1_color_fg $KUBE_PS1_SYMBOL_COLOR)$(_kube_ps1_symbol)${KUBE_PS1_RESET_COLOR}"
+  KUBE_PS1+="$(_kube_ps1_color_fg "$KUBE_PS1_SYMBOL_COLOR")$(_kube_ps1_symbol)${KUBE_PS1_RESET_COLOR}"
 
   if [[ -n "${KUBE_PS1_SEPARATOR}" ]] && [[ "${KUBE_PS1_SYMBOL_ENABLE}" == true ]]; then
     KUBE_PS1+="${KUBE_PS1_SEPARATOR}"
@@ -354,7 +356,7 @@ kube_ps1() {
 
   # Context
   if [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]]; then
-    KUBE_PS1+="$(_kube_ps1_color_fg $KUBE_PS1_CTX_COLOR)${KUBE_PS1_CONTEXT}${KUBE_PS1_RESET_COLOR}"
+    KUBE_PS1+="$(_kube_ps1_color_fg "$KUBE_PS1_CTX_COLOR")${KUBE_PS1_CONTEXT}${KUBE_PS1_RESET_COLOR}"
   fi
 
   # Namespace
@@ -362,7 +364,7 @@ kube_ps1() {
     if [[ -n "${KUBE_PS1_DIVIDER}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]]; then
       KUBE_PS1+="${KUBE_PS1_DIVIDER}"
     fi
-    KUBE_PS1+="$(_kube_ps1_color_fg ${KUBE_PS1_NS_COLOR})${KUBE_PS1_NAMESPACE}${KUBE_PS1_RESET_COLOR}"
+    KUBE_PS1+="$(_kube_ps1_color_fg "${KUBE_PS1_NS_COLOR}")${KUBE_PS1_NAMESPACE}${KUBE_PS1_RESET_COLOR}"
   fi
 
   # Suffix
