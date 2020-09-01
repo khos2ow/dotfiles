@@ -26,6 +26,7 @@ dotfiles: ## Installs the dotfiles.
 	done
 	mkdir -p $(HOME)/.config
 	mkdir -p $(HOME)/.config/fontconfig
+	mkdir -p $(HOME)/.config/regolith
 	mkdir -p $(HOME)/.local/share
 	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile
 	ln -snf $(CURDIR)/gitignore $(HOME)/.gitignore
@@ -33,6 +34,8 @@ dotfiles: ## Installs the dotfiles.
 	ln -snf $(CURDIR)/.config/liquidpromptrc $(HOME)/.config/liquidpromptrc
 	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf
 	ln -snf $(CURDIR)/.config/parcellite $(HOME)/.config/parcellite
+	ln -snf $(CURDIR)/.config/regolith/i3xrocks $(HOME)/.config/regolith/i3xrocks
+	ln -snf $(CURDIR)/.config/regolith/Xresources $(HOME)/.config/regolith/Xresources
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts
 	if [ ! -d $(HOME)/.liquidprompt ]; then git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; fi
 
