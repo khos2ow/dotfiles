@@ -35,7 +35,6 @@ check_is_sudo() {
 	fi
 }
 
-
 setup_sources_min() {
 	apt update || true
 	apt install -y \
@@ -157,6 +156,7 @@ base_min() {
 		strace \
 		sudo \
 		tar \
+		tmux \
 		tree \
 		tzdata \
 		unzip \
@@ -200,6 +200,75 @@ base() {
 		--no-install-recommends
 
 	setup_sudo
+
+	apt autoremove
+	apt autoclean
+	apt clean
+}
+
+# sets up apt sources for applications
+setup_sources_apps() {
+	# Add the Google Chrome distribution URI as a package source
+	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
+	deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+	EOF
+
+	# Docker
+	cat <<-EOF > /etc/apt/sources.list.d/docker.list
+	deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+	EOF
+
+	# Codium
+	cat <<-EOF > /etc/apt/sources.list.d/vscodium.list
+	deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
+	EOF
+
+	# Spotify
+	cat <<-EOF > /etc/apt/sources.list.d/spotify.list
+	deb http://repository.spotify.com stable non-free
+	EOF
+
+	# Import the Google Chrome public key
+	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+
+	# Import Docker public key
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+	# Import Codium public key
+	curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | apt-key add -
+
+	# Import Spotify public key
+	curl -fsSL https://download.spotify.com/debian/pubkey.gpg | apt-key add -
+}
+
+# installs application packages
+install_apps() {
+	apt update || true
+	apt -y upgrade
+
+	apt install -y \
+		codium \
+		containerd.io \
+		docker-ce \
+		docker-ce-cli \
+		google-chrome-stable \
+		meld \
+		parcellite \
+		spotify-client \
+		telegram-desktop \
+		--no-install-recommends
+
+	apt install -y \
+		i3xrocks-battery \
+		i3xrocks-cpu-usage \
+		i3xrocks-keyboard-layout \
+		i3xrocks-memory \
+		i3xrocks-net-traffic \
+		i3xrocks-time \
+		i3xrocks-volume \
+		i3xrocks-weather \
+		i3xrocks-wifi \
+		--no-install-recommends
 
 	apt autoremove
 	apt autoclean
@@ -269,11 +338,11 @@ setup_sudo() {
 		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
 	} >> /etc/sudoers
 
-	# setup downloads folder as tmpfs
-	# that way things are removed on reboot
-	# i like things clean but you may not want this
-	mkdir -p "/home/$TARGET_USER/Downloads"
-	echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=5G\\t0\\t0" >> /etc/fstab
+	# # setup downloads folder as tmpfs
+	# # that way things are removed on reboot
+	# # i like things clean but you may not want this
+	# mkdir -p "/home/$TARGET_USER/Downloads"
+	# echo -e "\\n# tmpfs for downloads\\ntmpfs\\t/home/${TARGET_USER}/Downloads\\ttmpfs\\tnodev,nosuid,size=5G\\t0\\t0" >> /etc/fstab
 }
 
 # install rust
@@ -295,7 +364,7 @@ install_golang() {
 	# purge old src
 	if [[ -d "$GO_SRC" ]]; then
 		sudo rm -rf "$GO_SRC"
-		sudo rm -rf "$GOPATH"
+		# sudo rm -rf "$GOPATH"
 	fi
 
 	GO_VERSION=${GO_VERSION#go}
@@ -322,23 +391,23 @@ install_golang() {
 	go get golang.org/x/tools/cmd/gorename
 	go get golang.org/x/tools/cmd/guru
 
-	go get github.com/genuinetools/amicontained
-	go get github.com/genuinetools/apk-file
-	go get github.com/genuinetools/audit
-	go get github.com/genuinetools/bpfd
-	go get github.com/genuinetools/bpfps
-	go get github.com/genuinetools/certok
-	go get github.com/genuinetools/netns
-	go get github.com/genuinetools/pepper
-	go get github.com/genuinetools/reg
-	go get github.com/genuinetools/udict
-	go get github.com/genuinetools/weather
+	# go get github.com/genuinetools/amicontained
+	# go get github.com/genuinetools/apk-file
+	# go get github.com/genuinetools/audit
+	# go get github.com/genuinetools/bpfd
+	# go get github.com/genuinetools/bpfps
+	# go get github.com/genuinetools/certok
+	# go get github.com/genuinetools/netns
+	# go get github.com/genuinetools/pepper
+	# go get github.com/genuinetools/reg
+	# go get github.com/genuinetools/udict
+	# go get github.com/genuinetools/weather
 
-	go get github.com/jessfraz/gmailfilters
-	go get github.com/jessfraz/junk/sembump
-	go get github.com/jessfraz/secping
-	go get github.com/jessfraz/ship
-	go get github.com/jessfraz/tdash
+	# go get github.com/jessfraz/gmailfilters
+	# go get github.com/jessfraz/junk/sembump
+	# go get github.com/jessfraz/secping
+	# go get github.com/jessfraz/ship
+	# go get github.com/jessfraz/tdash
 
 	go get github.com/axw/gocov/gocov
 	go get honnef.co/go/tools/cmd/staticcheck
@@ -348,52 +417,52 @@ install_golang() {
 	go get github.com/nsf/gocode
 	go get github.com/rogpeppe/godef
 
-	aliases=( genuinetools/contained.af genuinetools/binctr genuinetools/img docker/docker moby/buildkit opencontainers/runc )
-	for project in "${aliases[@]}"; do
-		owner=$(dirname "$project")
-		repo=$(basename "$project")
-		if [[ -d "${HOME}/${repo}" ]]; then
-			rm -rf "${HOME:?}/${repo}"
-		fi
+	# aliases=( genuinetools/contained.af genuinetools/binctr genuinetools/img docker/docker moby/buildkit opencontainers/runc )
+	# for project in "${aliases[@]}"; do
+	# 	owner=$(dirname "$project")
+	# 	repo=$(basename "$project")
+	# 	if [[ -d "${HOME}/${repo}" ]]; then
+	# 		rm -rf "${HOME:?}/${repo}"
+	# 	fi
 
-		mkdir -p "${GOPATH}/src/github.com/${owner}"
+	# 	mkdir -p "${GOPATH}/src/github.com/${owner}"
 
-		if [[ ! -d "${GOPATH}/src/github.com/${project}" ]]; then
-			(
-			# clone the repo
-			cd "${GOPATH}/src/github.com/${owner}"
-			git clone "https://github.com/${project}.git"
-			# fix the remote path, since our gitconfig will make it git@
-			cd "${GOPATH}/src/github.com/${project}"
-			git remote set-url origin "https://github.com/${project}.git"
-			)
-		else
-			echo "found ${project} already in gopath"
-		fi
+	# 	if [[ ! -d "${GOPATH}/src/github.com/${project}" ]]; then
+	# 		(
+	# 		# clone the repo
+	# 		cd "${GOPATH}/src/github.com/${owner}"
+	# 		git clone "https://github.com/${project}.git"
+	# 		# fix the remote path, since our gitconfig will make it git@
+	# 		cd "${GOPATH}/src/github.com/${project}"
+	# 		git remote set-url origin "https://github.com/${project}.git"
+	# 		)
+	# 	else
+	# 		echo "found ${project} already in gopath"
+	# 	fi
 
-		# make sure we create the right git remotes
-		if [[ "$owner" != "jessfraz" ]] && [[ "$owner" != "genuinetools" ]]; then
-			(
-			cd "${GOPATH}/src/github.com/${project}"
-			git remote set-url --push origin no_push
-			git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
-			)
-		fi
-	done
+	# 	# make sure we create the right git remotes
+	# 	if [[ "$owner" != "jessfraz" ]] && [[ "$owner" != "genuinetools" ]]; then
+	# 		(
+	# 		cd "${GOPATH}/src/github.com/${project}"
+	# 		git remote set-url --push origin no_push
+	# 		git remote add jessfraz "https://github.com/jessfraz/${repo}.git"
+	# 		)
+	# 	fi
+	# done
 
-	# do special things for k8s GOPATH
-	mkdir -p "${GOPATH}/src/k8s.io"
-	kubes_repos=( community kubernetes release sig-release )
-	for krepo in "${kubes_repos[@]}"; do
-		git clone "https://github.com/kubernetes/${krepo}.git" "${GOPATH}/src/k8s.io/${krepo}"
-		cd "${GOPATH}/src/k8s.io/${krepo}"
-		git remote set-url --push origin no_push
-		git remote add jessfraz "https://github.com/jessfraz/${krepo}.git"
-	done
+	# # do special things for k8s GOPATH
+	# mkdir -p "${GOPATH}/src/k8s.io"
+	# kubes_repos=( community kubernetes release sig-release )
+	# for krepo in "${kubes_repos[@]}"; do
+	# 	git clone "https://github.com/kubernetes/${krepo}.git" "${GOPATH}/src/k8s.io/${krepo}"
+	# 	cd "${GOPATH}/src/k8s.io/${krepo}"
+	# 	git remote set-url --push origin no_push
+	# 	git remote add jessfraz "https://github.com/jessfraz/${krepo}.git"
+	# done
 	)
 
-	# symlink weather binary for motd
-	sudo ln -snf "${GOPATH}/bin/weather" /usr/local/bin/weather
+	# # symlink weather binary for motd
+	# sudo ln -snf "${GOPATH}/bin/weather" /usr/local/bin/weather
 }
 
 # install graphics drivers
@@ -441,17 +510,17 @@ install_scripts() {
 	chmod +x /usr/local/bin/icdiff
 	chmod +x /usr/local/bin/git-icdiff
 
-	# install lolcat
-	curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
-	chmod +x /usr/local/bin/lolcat
+	# # install lolcat
+	# curl -sSL https://raw.githubusercontent.com/tehmaze/lolcat/master/lolcat > /usr/local/bin/lolcat
+	# chmod +x /usr/local/bin/lolcat
 
 
-	local scripts=( have light )
+	# local scripts=( have light )
 
-	for script in "${scripts[@]}"; do
-		curl -sSL "https://misc.j3ss.co/binaries/$script" > "/usr/local/bin/${script}"
-		chmod +x "/usr/local/bin/${script}"
-	done
+	# for script in "${scripts[@]}"; do
+	# 	curl -sSL "https://misc.j3ss.co/binaries/$script" > "/usr/local/bin/${script}"
+	# 	chmod +x "/usr/local/bin/${script}"
+	# done
 }
 
 # install stuff for i3 window manager
@@ -574,6 +643,7 @@ usage() {
 	echo "Usage:"
 	echo "  base                                - setup sources & install base pkgs"
 	echo "  basemin                             - setup sources & install base min pkgs"
+	echo "  apps                                - setup sources & install applications"
 	echo "  graphics {intel, geforce, optimus}  - install graphics drivers"
 	echo "  wm                                  - install window manager/desktop pkgs"
 	echo "  dotfiles                            - get dotfiles"
@@ -609,6 +679,14 @@ main() {
 		setup_sources_min
 
 		base_min
+	elif [[ $cmd == "apps" ]]; then
+		check_is_sudo
+		get_user
+
+		# setup /etc/apt/sources.list
+		setup_sources_apps
+
+		install_apps
 	elif [[ $cmd == "graphics" ]]; then
 		check_is_sudo
 
