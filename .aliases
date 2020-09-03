@@ -155,4 +155,3 @@ alias pg-berbid-vpn='sudo openvpn --config /home/khosrow/.openvpn/khosrow-berbid
 #unset ALL_PROXY
 #unset all_proxy
 #export socks_proxy='socks://localhost:8780/'
-
