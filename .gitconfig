@@ -168,9 +168,17 @@
 [merge "ours"]
 	driver = true
 
+[pull]
+	rebase = true
+
 [push]
 	# change to maching for machines with older versions of git 1.x.x
 	default = simple
+
+# # Uncomment if you want fetch to also get all github pull requests, this is rather
+# # large on big repos.
+# [remote "origin"]
+# 	fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
 
 [user]
 	name = Khosrow Moossavi
@@ -196,8 +204,3 @@
 
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
-
-# Uncomment if you want fetch to also get all github pull requests, this is rather
-# large on big repos.
-#[remote "origin"]
-	#fetch = +refs/pull/*/head:refs/remotes/origin/pull/*
