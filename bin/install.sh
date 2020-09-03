@@ -150,6 +150,7 @@ base_min() {
 		make \
 		mount \
 		net-tools \
+		openvpn \
 		policykit-1 \
 		silversearcher-ag \
 		ssh \
