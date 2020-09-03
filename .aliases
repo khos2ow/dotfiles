@@ -51,6 +51,11 @@ alias la="ls -lahF ${colorflag}"
 # shellcheck disable=SC2139
 alias lsd="ls -lhF ${colorflag} | grep --color=never '^d'"
 
+# some more ls aliases
+# alias ll='ls -alF'
+# alias la='ls -A'
+# alias l='ls -CF'
+
 # Always use color output for `ls`
 # shellcheck disable=SC2139
 alias ls="command ls ${colorflag}"
@@ -137,3 +142,10 @@ alias pubkey="more ~/.ssh/id_ed25519.pub | xclip -selection clipboard | echo '=>
 
 # Pipe my private key to my clipboard.
 alias prikey="more ~/.ssh/id_ed25519 | xclip -selection clipboard | echo '=> Private key copied to pasteboard.'"
+
+# FIRE: GIT RUN!
+alias git-run='git add . && git commit -m "FIRE!!" && git push -f origin $(git rev-parse --abbrev-ref HEAD)'
+
+#unset ALL_PROXY
+#unset all_proxy
+#export socks_proxy='socks://localhost:8780/'
