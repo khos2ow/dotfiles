@@ -122,6 +122,7 @@ base_min() {
 	apt -y upgrade
 
 	apt install -y \
+		acpi \
 		adduser \
 		automake \
 		bash-completion \
