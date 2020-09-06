@@ -145,58 +145,7 @@ done
 	grep -v "[?*]" | cut -d " " -f2 | \
 	tr ' ' '\n')" scp sftp ssh
 
-# source kubectl bash completion
-if hash kubectl 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kubectl completion bash)
-fi
-
-# source kops bash completion
-if hash kops 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kops completion bash)
-fi
-
-# source kind bash completion
-if hash kind 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(kind completion bash)
-fi
-
-# source helm bash completion
-if hash helm 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(helm completion bash)
-fi
-
-# source velero bash completion
-if hash velero 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(velero completion bash)
-fi
-
-# source terraform-docs bash completion
-if hash terraform-docs 2>/dev/null; then
-	# shellcheck source=/dev/null
-	source <(terraform-docs completion bash)
-fi
-
-# HashiCorp autocomplete
-if hash packer 2>/dev/null; then
-	complete -C /usr/local/bin/packer packer
-fi
-if hash terraform 2>/dev/null; then
-	complete -C /usr/local/bin/terraform terraform
-fi
-if hash vagrant 2>/dev/null; then
-	complete -C /usr/local/bin/vagrant vagrant
-fi
-if hash vault 2>/dev/null; then
-	complete -C /usr/local/bin/vault vault
-fi
-
-
-for file in ~/.{aliases,aliases-work,functions,path,extra,exports}; do
+for file in ~/.{aliases,aliases-work,completion,functions,path,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
