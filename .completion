@@ -1,0 +1,15 @@
+#!/bin/bash
+
+for binary in {helm,kind,kops,kubectl,velero}; do
+    if hash "$binary" 2>/dev/null; then
+        # shellcheck source=/dev/null
+        source <($binary completion bash)
+    fi
+done
+
+for binary in {kustomize,packer,terraform,vagrant,vault}; do
+    if hash "$binary" 2>/dev/null; then
+        # shellcheck source=/dev/null
+        complete -C /usr/local/bin/"$binary" "$binary"
+    fi
+done
