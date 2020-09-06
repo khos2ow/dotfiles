@@ -37,6 +37,7 @@ Tools:
     rke
     skaffold
     terraform
+    terraform-docs
     tilt
     vagrant
     vault
@@ -75,6 +76,7 @@ latest_version() {
     rke) latest_release "rancher/rke" ;;
     skaffold) latest_release "GoogleContainerTools/skaffold" ;;
     terraform) latest_tag "hashicorp/terraform" ;;
+    terraform-docs) latest_release "terraform-docs/terraform-docs" ;;
     tilt) latest_release "tilt-dev/tilt" ;;
     vagrant) latest_tag "hashicorp/vagrant" ;;
     vault) latest_tag "hashicorp/vault" ;;
@@ -240,6 +242,9 @@ main() {
     terraform)
         url="https://releases.hashicorp.com/terraform/${version}/terraform_${version}_linux_amd64.zip"
         type="zip"
+        ;;
+    terraform-docs)
+        url="https://github.com/terraform-docs/terraform-docs/releases/download/v${version}/terraform-docs-v${version}-linux-amd64"
         ;;
     tilt)
         url="https://github.com/tilt-dev/tilt/releases/download/v${version}/tilt.${version}.linux.x86_64.tar.gz"
