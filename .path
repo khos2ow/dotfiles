@@ -11,7 +11,7 @@
 # fi
 
 # go root
-export GOROOT=/usr/local/lib/go/go-latest
+export GOROOT=/usr/local/go
 
 # go path
 export GOPATH="${HOME}/work/go"
