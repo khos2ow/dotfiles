@@ -31,6 +31,7 @@ Tools:
     kind
     kops
     kubectl
+    kubie
     kustomize
     minikube
     packer
@@ -70,6 +71,7 @@ latest_version() {
     kind) latest_release "kubernetes-sigs/kind" ;;
     kops) latest_release "kubernetes/kops" ;;
     kubectl) curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt ;;
+    kubie) latest_release "sbstp/kubie" ;;
     kustomize) latest_release "kubernetes-sigs/kustomize" "kustomize" | sed 's|kustomize/||g' ;;
     minikube) latest_release "kubernetes/minikube" ;;
     packer) latest_tag "hashicorp/packer" ;;
@@ -221,6 +223,9 @@ main() {
         ;;
     kubectl)
         url="https://storage.googleapis.com/kubernetes-release/release/v${version}/bin/linux/amd64/kubectl"
+        ;;
+    kubie)
+        url="https://github.com/sbstp/kubie/releases/download/v${version}/kubie-linux-amd64"
         ;;
     kustomize)
         url="https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v${version}/kustomize_v${version}_linux_amd64.tar.gz"

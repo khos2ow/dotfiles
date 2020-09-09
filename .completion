@@ -13,3 +13,7 @@ for binary in {kustomize,packer,terraform,vagrant,vault}; do
         complete -C /usr/local/bin/"$binary" "$binary"
     fi
 done
+
+if hash kubie 2>/dev/null; then
+    source ~/.bash_completion_kubie
+fi
