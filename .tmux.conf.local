@@ -87,7 +87,7 @@ tmux_conf_theme_mode_attr='bold'
 
 # status line style
 tmux_conf_theme_status_fg='#8a8a8a'                     # light gray
-tmux_conf_theme_status_bg='#080808'                     # dark gray
+tmux_conf_theme_status_bg='#1f2430'                     # dark gray
 tmux_conf_theme_status_attr='none'
 
 # terminal title
@@ -109,7 +109,7 @@ tmux_conf_theme_terminal_title='#h ❐ #S ● #I #W'
 #     - #{username}
 #     - #{username_ssh}
 tmux_conf_theme_window_status_fg='#8a8a8a'              # light gray
-tmux_conf_theme_window_status_bg='#080808'              # dark gray
+tmux_conf_theme_window_status_bg='#1f2430'              # dark gray
 tmux_conf_theme_window_status_attr='none'
 tmux_conf_theme_window_status_format='#I #W'
 #tmux_conf_theme_window_status_format='#{circled_window_index} #W'
@@ -146,14 +146,14 @@ tmux_conf_theme_window_status_last_bg='default'
 tmux_conf_theme_window_status_last_attr='none'
 
 # status left/right sections separators
-#tmux_conf_theme_left_separator_main=''
-#tmux_conf_theme_left_separator_sub='|'
-#tmux_conf_theme_right_separator_main=''
-#tmux_conf_theme_right_separator_sub='|'
-tmux_conf_theme_left_separator_main='\uE0B0'  # /!\ you don't need to install Powerline
-tmux_conf_theme_left_separator_sub='\uE0B1'   #   you only need fonts patched with
-tmux_conf_theme_right_separator_main='\uE0B2' #   Powerline symbols or the standalone
-tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see README.md
+tmux_conf_theme_left_separator_main=''
+tmux_conf_theme_left_separator_sub='|'
+tmux_conf_theme_right_separator_main=''
+tmux_conf_theme_right_separator_sub='|'
+#tmux_conf_theme_left_separator_main='\uE0B0'  # /!\ you don't need to install Powerline
+#tmux_conf_theme_left_separator_sub='\uE0B1'   #   you only need fonts patched with
+#tmux_conf_theme_right_separator_main='\uE0B2' #   Powerline symbols or the standalone
+#tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see README.md
 
 # status left/right content:
 #   - separate main sections with '|'
@@ -179,20 +179,21 @@ tmux_conf_theme_right_separator_sub='\uE0B3'  #   PowerlineSymbols.otf font, see
 #     - #{uptime_s}
 #     - #{username}
 #     - #{username_ssh}
-tmux_conf_theme_status_left=' ❐ #S '
+tmux_conf_theme_status_left=' ❐ #S'
 #tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} ,#{?battery_status, #{battery_status},}#{?battery_vbar, #{battery_vbar},}#{?battery_percentage, #{battery_percentage},} , %a %b %d %Y %R | #{username}#{root} | #{hostname} '
-tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} , %a %b %d %Y %R | #{username}#{root} | #{hostname} '
+#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} , %a %b %d %Y %R | #{username}#{root} | #{hostname} '
+tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} | #{username}#{root} @ #{hostname}'
 #tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} ,#{?battery_vbar, #{battery_vbar},}, %a %b %d %Y %R | #{username}#{root} | #{hostname} '
 
 # status left style
 tmux_conf_theme_status_left_fg='#e4e4e4'  # white
-tmux_conf_theme_status_left_bg='#080808'  # dark gray
+tmux_conf_theme_status_left_bg='#1f2430'  # dark gray
 tmux_conf_theme_status_left_attr='bold'
 
 # status right style
-tmux_conf_theme_status_right_fg='#8a8a8a,#e4e4e4,#000000' # light gray, white, black
-tmux_conf_theme_status_right_bg='#080808,#d70000,#e4e4e4' # dark gray, red, white
-tmux_conf_theme_status_right_attr='none,bold,bold'
+tmux_conf_theme_status_right_fg='#8a8a8a,#e4e4e4' # light gray, white
+tmux_conf_theme_status_right_bg='#1f2430,#1f2430' # dark gray, dark gray
+tmux_conf_theme_status_right_attr='none,bold'
 
 # pairing indicator
 tmux_conf_theme_pairing='👓 '          # U+1F453
@@ -208,7 +209,7 @@ tmux_conf_theme_prefix_attr='none'
 
 # root indicator
 tmux_conf_theme_root='!'
-tmux_conf_theme_root_fg='none'
+tmux_conf_theme_root_fg='#d70000'
 tmux_conf_theme_root_bg='none'
 tmux_conf_theme_root_attr='bold,blink'
 
@@ -303,7 +304,7 @@ unbind C-a
 # bind C-a send-prefix
 
 # move status line to top
-#set -g status-position top 
+#set -g status-position top
 
 # Show kubernetes context and cluster
 #set -g status-right "#(/bin/bash $HOME/.tmux/kube.tmux 250 red cyan)"
