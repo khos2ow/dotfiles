@@ -163,6 +163,7 @@ base_min() {
 		tzdata \
 		unzip \
 		vim \
+		xclip \
 		xz-utils \
 		zip \
 		--no-install-recommends
