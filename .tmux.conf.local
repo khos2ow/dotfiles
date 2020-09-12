@@ -180,10 +180,9 @@ tmux_conf_theme_right_separator_sub='|'
 #     - #{username}
 #     - #{username_ssh}
 tmux_conf_theme_status_left=' ❐ #S'
-#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} ,#{?battery_status, #{battery_status},}#{?battery_vbar, #{battery_vbar},}#{?battery_percentage, #{battery_percentage},} , %a %b %d %Y %R | #{username}#{root} | #{hostname} '
-#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} , %a %b %d %Y %R | #{username}#{root} | #{hostname} '
+#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} ,#{?battery_status, #{battery_status},}#{?battery_vbar, #{battery_vbar},}#{?battery_percentage, #{battery_percentage},} , %a %b %d %Y %R | #{username}#{root} @ #{hostname} '
+#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} , %a %b %d %Y %R | #{username}#{root} @ #{hostname} '
 tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} | #{username}#{root} @ #{hostname}'
-#tmux_conf_theme_status_right='#{prefix}#{pairing}#{synchronized} ↑#{?uptime_y, #{uptime_y}y,}#{?uptime_d, #{uptime_d}d,}#{?uptime_h, #{uptime_h}h,}#{?uptime_m, #{uptime_m}m,} ,#{?battery_vbar, #{battery_vbar},}, %a %b %d %Y %R | #{username}#{root} | #{hostname} '
 
 # status left style
 tmux_conf_theme_status_left_fg='#e4e4e4'  # white
@@ -304,10 +303,15 @@ unbind C-a
 # bind C-a send-prefix
 
 # move status line to top
-#set -g status-position top
+set -g status-position top
 
 # Show kubernetes context and cluster
 #set -g status-right "#(/bin/bash $HOME/.tmux/kube.tmux 250 red cyan)"
+
+# Mimic bottom border for top status bar
+#setw -g pane-border-status top
+#set -g pane-border-format ' #{pane_current_command} '
+#setw -g pane-border-format '─'
 
 # prefix + / to search
 bind-key / copy-mode \; send-key ?
