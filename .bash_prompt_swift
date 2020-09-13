@@ -94,7 +94,7 @@ _swift_ps1_color_fg() {
       SWIFT_PS1_FG_CODE="${_SWIFT_PS1_DEFAULT_FG}"
     fi
   fi
-  echo ${_SWIFT_PS1_OPEN_ESC}${SWIFT_PS1_FG_CODE}${_SWIFT_PS1_CLOSE_ESC}
+  echo "${_SWIFT_PS1_OPEN_ESC}${SWIFT_PS1_FG_CODE}${_SWIFT_PS1_CLOSE_ESC}"
 }
 
 _swift_ps1_color_bg() {

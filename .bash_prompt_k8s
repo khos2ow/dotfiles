@@ -104,7 +104,7 @@ _kube_ps1_color_fg() {
       KUBE_PS1_FG_CODE="${_KUBE_PS1_DEFAULT_FG}"
     fi
   fi
-  echo ${_KUBE_PS1_OPEN_ESC}${KUBE_PS1_FG_CODE}${_KUBE_PS1_CLOSE_ESC}
+  echo "${_KUBE_PS1_OPEN_ESC}${KUBE_PS1_FG_CODE}${_KUBE_PS1_CLOSE_ESC}"
 }
 
 _kube_ps1_color_bg() {
