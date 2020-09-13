@@ -15,9 +15,11 @@ for binary in {kustomize,packer,terraform,vagrant,vault}; do
 done
 
 if hash kubie 2>/dev/null; then
+    # shellcheck source=/dev/null
     source ~/.bash_completion_kubie
 fi
 
 if hash aws 2>/dev/null; then
+    # shellcheck source=/dev/null
     complete -C '/usr/local/bin/aws_completer' aws
 fi
