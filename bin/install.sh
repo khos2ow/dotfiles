@@ -134,6 +134,7 @@ base_min() {
 		dnsutils \
 		file \
 		findutils \
+		flameshot \
 		gcc \
 		git \
 		gnupg \
