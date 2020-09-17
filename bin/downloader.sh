@@ -21,6 +21,7 @@ downloader.sh
     This script downloads binaries and tools and instals them locally
 
 Flags:
+       --override boolean       override the current binary with new version (default: true)
        --version string         get specified version of the binary
    -h, --help                   print this help
 
@@ -114,6 +115,7 @@ download() {
     local url=$2
     local type=$3
     local target=$4
+    local override=$5
 
     local file=""
 
@@ -152,7 +154,11 @@ download() {
 
     echo "Moving $name to /usr/local/bin ..."
 
-    mv "$name" /usr/local/bin
+    if [[ "$override" == "true" ]]; then
+        mv "$name" /usr/local/bin
+    else
+        mv "$name" /usr/local/bin/"$name"-"$version"
+    fi
 }
 
 main() {
@@ -160,9 +166,14 @@ main() {
 
     local binary=""
     local version="latest"
+    local override="true"
 
     while [ -n "$1" ]; do
         case "$1" in
+        --override)
+            override=$2
+            shift 2
+            ;;
         --version)
             version=$2
             shift 2
@@ -274,7 +285,7 @@ main() {
         ;;
     esac
 
-    download "$binary" "$url" "$type" "$target"
+    download "$binary" "$url" "$type" "$target" "$override"
     echo "Finished"
 }
 
