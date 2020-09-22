@@ -5,8 +5,8 @@
 
 # If not running interactively, don't do anything
 case $- in
-	*i*) ;;
-	*) return;;
+*i*) ;;
+*) return ;;
 esac
 
 # don't put duplicate lines or lines starting with space in the history.
@@ -38,7 +38,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-	xterm-color|*-256color) color_prompt=yes;;
+xterm-color | *-256color) color_prompt=yes ;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -66,21 +66,26 @@ unset color_prompt force_color_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in
-	xterm*|rxvt*)
-		PS1="\\[\\e]0;${debian_chroot:+($debian_chroot)}\\u@\\h: \\w\\a\\]$PS1"
-		;;
-	*)
-		;;
+xterm* | rxvt*)
+	PS1="\\[\\e]0;${debian_chroot:+($debian_chroot)}\\u@\\h: \\w\\a\\]$PS1"
+	;;
+*) ;;
+
 esac
 
-# Only load Liquid Prompt in interactive shells, not from a script or from scp
-for file in ~/.{bash_prompt_k8s,bash_prompt_swift,liquidprompt/liquidprompt}; do
-	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
-		# shellcheck source=/dev/null
-		source "$file"
-	fi
-done
-unset file
+# If starship is installed use it, otherwise fall back to liquidprompt
+if hash starship 2>/dev/null; then
+	eval "$(starship init bash)"
+else
+	# Only load Liquid Prompt in interactive shells, not from a script or from scp
+	for file in ~/.{bash_prompt_k8s,bash_prompt_swift,liquidprompt/liquidprompt}; do
+		if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+			# shellcheck source=/dev/null
+			source "$file"
+		fi
+	done
+	unset file
+fi
 
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -115,7 +120,7 @@ if ! shopt -oq posix; then
 	fi
 fi
 if [[ -d /etc/bash_completion.d/ ]]; then
-	for file in /etc/bash_completion.d/* ; do
+	for file in /etc/bash_completion.d/*; do
 		# shellcheck source=/dev/null
 		source "$file"
 	done
@@ -134,16 +139,16 @@ shopt -s cdspell
 # * `autocd`, e.g. `**/qux` will enter `./foo/bar/baz/qux`
 # * Recursive globbing, e.g. `echo **/*.txt`
 for option in autocd globstar; do
-	shopt -s "$option" 2> /dev/null
+	shopt -s "$option" 2>/dev/null
 done
 
 # Add tab completion for SSH hostnames based on ~/.ssh/config
 # ignoring wildcards
 [[ -e "$HOME/.ssh/config" ]] && complete -o "default" \
 	-o "nospace" \
-	-W "$(grep "^Host" ~/.ssh/config | \
-	grep -v "[?*]" | cut -d " " -f2 | \
-	tr ' ' '\n')" scp sftp ssh
+	-W "$(grep "^Host" ~/.ssh/config |
+		grep -v "[?*]" | cut -d " " -f2 |
+		tr ' ' '\n')" scp sftp ssh
 
 for file in ~/.{aliases,aliases-work,completion,functions,path,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then

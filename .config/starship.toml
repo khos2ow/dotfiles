@@ -1,0 +1,77 @@
+add_newline = false
+scan_timeout = 10
+prompt_order = [
+    "username",
+    "hostname",
+    "kubernetes",
+    "directory",
+    "custom.nonwritable",
+    "git_branch",
+    "git_commit",
+    "git_state",
+    "git_status",
+    "docker_context",
+    "package",
+    "golang",
+    "java",
+    "python",
+    "ruby",
+    "rust",
+    "terraform",
+    "memory_usage",
+    "aws",
+    "env_var",
+    "cmd_duration",
+    "custom",
+    "line_break",
+    "jobs",
+    # "battery",
+    # "time",
+    "character"
+]
+
+[character]
+symbol = "➜"
+use_symbol_for_status = true 
+style_success = "bold white"
+
+[aws]
+symbol = ""
+
+[custom.nonwritable]
+command = "echo :"
+when = """ ! test -w $(pwd) """
+prefix = ""
+disabled = false
+style = "bold red"
+
+[directory]
+truncation_length = 0
+style = "bold white"
+
+[docker]
+symbol = " "
+
+[git_branch]
+symbol = " "
+
+[git_status]
+prefix = ""
+suffix = " "
+
+[golang]
+symbol = " "
+
+[kubernetes]
+disabled = false
+style = "bold fg:#63b2e7"
+
+[line_break]
+disabled = true
+
+[python]
+symbol = " "
+
+[terraform]
+symbol = ""
+disabled = true
