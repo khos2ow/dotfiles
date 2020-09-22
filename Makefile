@@ -1,5 +1,5 @@
 .PHONY: all
-all: bin usr dotfiles etc ## Installs the bin and etc directory files and the dotfiles.
+all: bin dotfiles ## Installs the bin and etc directory files and the dotfiles.
 
 .PHONY: bin
 bin: ## Installs the bin directory files.
@@ -9,13 +9,6 @@ bin: ## Installs the bin directory files.
 		sudo ln -sf $$file /usr/local/bin/$$f; \
 	done
 
-# gpg --list-keys || true;
-# ln -sfn $(CURDIR)/.gnupg/gpg.conf $(HOME)/.gnupg/gpg.conf;
-# ln -sfn $(CURDIR)/.gnupg/gpg-agent.conf $(HOME)/.gnupg/gpg-agent.conf;
-# git update-index --skip-worktree $(CURDIR)/.gitconfig;
-# ln -snf $(CURDIR)/.themes $(HOME)/.themes;
-# fc-cache -f -v || true
-
 .PHONY: dotfiles
 dotfiles: ## Installs the dotfiles.
 	# add aliases for dotfiles
@@ -24,20 +17,33 @@ dotfiles: ## Installs the dotfiles.
 		ln -snf $$file $(HOME)/$$f; \
 		echo ln -snf $$file $(HOME)/$$f; \
 	done
-	mkdir -p $(HOME)/.config
-	mkdir -p $(HOME)/.config/fontconfig
-	mkdir -p $(HOME)/.config/regolith
-	mkdir -p $(HOME)/.local/share
+
 	ln -snf $(CURDIR)/.bash_profile $(HOME)/.profile
 	ln -snf $(CURDIR)/gitignore $(HOME)/.gitignore
-	ln -snf $(CURDIR)/.config/liquidprompt $(HOME)/.config/liquidprompt
-	ln -snf $(CURDIR)/.config/liquidpromptrc $(HOME)/.config/liquidpromptrc
-	ln -snf $(CURDIR)/.config/fontconfig/fontconfig.conf $(HOME)/.config/fontconfig/fontconfig.conf
-	ln -snf $(CURDIR)/.config/parcellite $(HOME)/.config/parcellite
-	ln -snf $(CURDIR)/.config/regolith/i3xrocks $(HOME)/.config/regolith/i3xrocks
-	ln -snf $(CURDIR)/.config/regolith/Xresources $(HOME)/.config/regolith/Xresources
+
+	mkdir -p $(HOME)/.local/share
 	ln -snf $(CURDIR)/.fonts $(HOME)/.local/share/fonts
-	if [ ! -d $(HOME)/.liquidprompt ]; then git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; fi
+	fc-cache -f -v || true
+
+	mkdir -p $(HOME)/.config
+	@ for file in $(shell find $(CURDIR)/.config -maxdepth 1 -not -path "$(CURDIR)/.config" -name "*" -not -name "fontconfig" -not -name "regolith"); do \
+		f=$$(basename $$file); \
+		echo "ln -snf $(CURDIR)/.config/$$f $(HOME)/.config/$$f" ; \
+		ln -snf $(CURDIR)/.config/$$f $(HOME)/.config/$$f ; \
+	done
+	@ for dir in fontconfig regolith ; do \
+		echo "mkdir -p $(HOME)/.config/$$dir" ; \
+		mkdir -p $(HOME)/.config/$$dir ; \
+		for file in $$(find "$(CURDIR)/.config/$$dir" -maxdepth 1 -not -path "$(CURDIR)/.config/$$dir"); do \
+			f=$$(basename $$file); \
+			echo "ln -snf $(CURDIR)/.config/$$dir/$$f $(HOME)/.config/$$dir/$$f" ; \
+			ln -snf $(CURDIR)/.config/$$dir/$$f $(HOME)/.config/$$dir/$$f ; \
+		done ; \
+	done
+
+	@ if [ ! -d $(HOME)/.liquidprompt ]; then \
+		git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; \
+	fi
 
 .PHONY: etc
 etc: ## Installs the etc directory files.
