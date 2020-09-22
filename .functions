@@ -16,6 +16,28 @@ uneksport() {
 	unset KUBECONFIG
 }
 
+contributors() {
+	if [ -z "$1" ] && [ -z "$2" ]; then
+		echo "Error: refs are missing. e.g. contributors <old_ref> <new_ref> "
+	else
+		git log "$2".."$1" |
+			grep ^Author: |
+			sed 's/ <.*//; s/^Author: //' |
+			sort |
+			uniq |
+			while read -r line; do
+				name=$(echo "$line" | iconv -f utf-8 -t ascii//translit)
+				handle=$(curl -fsSL "https://api.github.com/search/users?q=in:name%20${name// /%20}" | jq -r '.items[0].login')
+				if [ "$handle" == "null" ]; then
+					echo "- ${name} (@${name})"
+				else
+					echo "- ${name} (@${handle})"
+				fi
+				sleep 5
+			done
+	fi
+}
+
 # Cheat the commands, man alternative
 cheat() {
 	curl "http://cheat.sh/$1"
