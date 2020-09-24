@@ -16,6 +16,13 @@ uneksport() {
 	unset KUBECONFIG
 }
 
+# unset AWS_*
+unaws() {
+	for e in $(env | grep -e "^AWS_" | cut -d= -f1 | uniq | sort); do
+		unset "$e"
+	done
+}
+
 contributors() {
 	if [ -z "$1" ] && [ -z "$2" ]; then
 		echo "Error: refs are missing. e.g. contributors <old_ref> <new_ref> "
