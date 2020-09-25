@@ -16,6 +16,15 @@ uneksport() {
 	unset KUBECONFIG
 }
 
+# set AWS_PROFILE based on the provided name
+eaws() {
+	if [ -z "$1" ]; then
+		echo "Usage: eaws profile-name"
+	else
+		export AWS_PROFILE=$1
+	fi
+}
+
 # unset AWS_*
 unaws() {
 	for e in $(env | grep -e "^AWS_" | cut -d= -f1 | uniq | sort); do
