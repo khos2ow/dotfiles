@@ -16,7 +16,7 @@ done
 
 if hash kubie 2>/dev/null; then
     # shellcheck source=/dev/null
-    source ~/.bash_completion_kubie
+    source /etc/bash_completion.d/kubie
 fi
 
 if hash aws 2>/dev/null; then

@@ -45,6 +45,8 @@ dotfiles: ## Installs the dotfiles.
 		git clone https://github.com/nojhan/liquidprompt.git $(HOME)/.liquidprompt ; \
 	fi
 
+	sudo ln -snf $(CURDIR)/etc/bash_completion.d/kubie /etc/bash_completion.d/kubie
+
 .PHONY: etc
 etc: ## Installs the etc directory files.
 	sudo mkdir -p /etc/docker/seccomp
