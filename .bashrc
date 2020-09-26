@@ -77,8 +77,14 @@ esac
 if hash starship 2>/dev/null; then
 	eval "$(starship init bash)"
 else
+	file=~/.liquidprompt/liquidprompt
+        if [[ -r "$file" ]] && [[ -f "$file" ]]; then
+		# shellcheck source=/dev/null
+		source "$file"
+	fi
+	unset file
 	# Only load Liquid Prompt in interactive shells, not from a script or from scp
-	for file in ~/.{bash_prompt_k8s,bash_prompt_swift,liquidprompt/liquidprompt}; do
+	for file in $(find ~/.config/liquidprompt/ -type f -name "prompt_*" | sort -u); do
 		if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 			# shellcheck source=/dev/null
 			source "$file"
@@ -157,8 +163,6 @@ for file in ~/.{aliases,aliases-work,completion,functions,path,extra,exports}; d
 	fi
 done
 unset file
-
-#sh /usr/bin/scrolling
 
 if [[ -r ~/.kube/config ]] && [[ -f ~/.kube/config ]]; then
 	eksport ~/.kube/config
