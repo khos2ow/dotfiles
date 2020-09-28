@@ -194,7 +194,7 @@ BINARIES=$(
   },
   "repo": "hashicorp/vagrant",
   "target": "",
-  "type": "tar.gz",
+  "type": "zip",
   "url": "https://releases.hashicorp.com/vagrant/<VERSION>/vagrant_<VERSION>_linux_amd64.zip"
 },
 {
@@ -205,7 +205,7 @@ BINARIES=$(
   },
   "repo": "hashicorp/vault",
   "target": "",
-  "type": "tar.gz",
+  "type": "zip",
   "url": "https://releases.hashicorp.com/vault/<VERSION>/vault_<VERSION>_linux_amd64.zip"
 },
 {
