@@ -64,6 +64,9 @@ export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40
 # Always enable colored `grep` output
 alias grep='grep --color=auto '
 
+# Always use SOCKS5 with curl
+alias curl="curl --socks5-hostname 127.0.0.1:8780"
+
 # Enable aliases to be sudo’ed
 alias sudo='sudo '
 
