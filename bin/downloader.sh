@@ -648,7 +648,7 @@ if [[ "$COMMAND" == "get" ]]; then
 
     printf "%b\n" "$(
         cat <<MSG
-Install ${BOLD}${WHITE}${NAME} @ ${VERSION}${NO_COLOR}
+Install ${BOLD}${WHITE}${NAME} @ v${VERSION}${NO_COLOR}
    from ${BOLD}${WHITE}${URL}${NO_COLOR}
      to ${BOLD}${WHITE}${BIN_DIR}${NO_COLOR}
 MSG
