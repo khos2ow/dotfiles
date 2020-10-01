@@ -277,6 +277,8 @@ install_apps() {
 	apt autoremove
 	apt autoclean
 	apt clean
+
+	curl -fsSL https://starship.rs/install.sh | bash -s -- --yes
 }
 
 # install and configure dropbear

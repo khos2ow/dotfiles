@@ -1,53 +1,46 @@
 add_newline = false
 scan_timeout = 10
-prompt_order = [
-    "username",
-    "hostname",
-    "kubernetes",
-    "directory",
-    "custom.nonwritable",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "docker_context",
-    "package",
-    "golang",
-    "java",
-    "python",
-    "ruby",
-    "rust",
-    "terraform",
-    "memory_usage",
-    "aws",
-    "env_var",
-    "cmd_duration",
-    "custom",
-    "line_break",
-    "jobs",
-    # "battery",
-    # "time",
-    "character"
-]
+format = """\
+    $username\
+    $hostname\
+    $kubernetes\
+    $directory\
+    $git_branch\
+    $git_commit\
+    $git_state\
+    $git_status\
+    $docker_context\
+    $package\
+    $golang\
+    $java\
+    $python\
+    $ruby\
+    $rust\
+    $helm\
+    $terraform\
+    $memory_usage\
+    $aws\
+    $env_var\
+    $cmd_duration\
+    $custom\
+    $line_break\
+    $jobs\
+    $character\
+    $status\
+    """
 
 [character]
-symbol = "➜"
-use_symbol_for_status = true 
-style_success = "bold white"
+success_symbol = "[➜](bold white)"
+error_symbol = "[✖](bold red)"
 
 [aws]
 symbol = ""
 
-[custom.nonwritable]
-command = "echo :"
-when = """ ! test -w $(pwd) """
-prefix = ""
-disabled = false
-style = "bold red"
-
 [directory]
 truncation_length = 0
 style = "bold white"
+read_only_symbol=" :"
+read_only_symbol_style = "bold red"
 
 [docker]
 symbol = " "
@@ -55,12 +48,18 @@ symbol = " "
 [git_branch]
 symbol = " "
 
+[git_commit]
+format = "[$hash]($style) "
+
 [git_status]
-prefix = ""
-suffix = " "
+format = "([$all_status$ahead_behind]($style) )"
 
 [golang]
 symbol = " "
+
+[helm]
+format = "via [$symbol$version]($style) "
+style = "bold white"
 
 [kubernetes]
 disabled = false
@@ -69,8 +68,17 @@ style = "bold fg:#63b2e7"
 [line_break]
 disabled = true
 
+[package]
+symbol = " "
+
 [python]
 symbol = " "
+
+[status]
+style = "bold red"
+symbol = ""
+format = "[$status]($style) "
+disabled = false
 
 [terraform]
 symbol = ""
