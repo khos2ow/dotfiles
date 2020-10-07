@@ -250,6 +250,16 @@ get_tmpfile() {
     fi
 }
 
+installed_version() {
+    if "$NAME" --version >/dev/null 2>&1; then
+        "$NAME" --version
+    elif "$NAME" version >/dev/null 2>&1; then
+        "$NAME" version
+    else
+        echo "unknown"
+    fi
+}
+
 latest_version() {
     local type=""
     local repo=""
@@ -528,7 +538,7 @@ OVERRIDE="true"
 FORCE=
 
 while [ "$#" -gt 0 ]; do
-  case "$1" in
+    case "$1" in
     check)
         if [[ -n "$COMMAND" ]]; then
             error "Cannot use commands together"
@@ -633,7 +643,9 @@ TARGET="$(echo "$BINARY" | jq -r '.target')"
 # 'check' command
 if [[ "$COMMAND" == "check" ]]; then
     info "Checking latest version of $NAME"
-    latest_version
+    echo "  Installed: ${BOLD}${WHITE}$(installed_version)${NO_COLOR}"
+    echo "  Available: ${BOLD}${WHITE}$(latest_version)${NO_COLOR}"
+
 fi
 
 # 'get' command
