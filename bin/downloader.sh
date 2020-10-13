@@ -54,6 +54,17 @@ BINARIES=$(
   "url": "https://get.helm.sh/helm-v<VERSION>-linux-amd64.tar.gz"
 },
 {
+  "name": "k9s",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "derailed/k9s",
+  "target": "",
+  "type": "tar.gz",
+  "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_Linux_x86_64.tar.gz"
+},
+{
   "name": "kind",
   "latest": {
     "type": "Release",
@@ -461,7 +472,8 @@ Following tools and binaries are supported:
 ├---┼----------------┤
 | H | helm           |
 ├---┼----------------┤
-| K | kind           |
+| K | k9s            |
+|   | kind           |
 |   | kops           |
 |   | kubectl        |
 |   | kubie          |
