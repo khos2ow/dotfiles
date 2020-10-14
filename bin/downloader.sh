@@ -118,7 +118,7 @@ BINARIES=$(
   "repo": "",
   "target": "",
   "type": "tar.gz",
-  "url": "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v<VERSION>/kustomize_<VERSION>_linux_amd64.tar.gz"
+  "url": "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v<VERSION>/kustomize_v<VERSION>_linux_amd64.tar.gz"
 },
 {
   "name": "minikube",
