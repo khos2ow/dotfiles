@@ -255,6 +255,7 @@ install_apps() {
 		containerd.io \
 		docker-ce \
 		docker-ce-cli \
+		gimp \
 		google-chrome-stable \
 		meld \
 		parcellite \
