@@ -39,6 +39,9 @@ else # OS X `ls`
 	colorflag="-G"
 fi
 
+# kubectl
+alias k="kubectl"
+
 # List all files colorized in long format
 # shellcheck disable=SC2139
 alias l="ls -lhF ${colorflag}"
