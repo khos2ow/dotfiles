@@ -7,6 +7,9 @@ for binary in {helm,kind,kops,kubectl,terraform-docs,velero}; do
     fi
 done
 
+# shellcheck source=/dev/null
+source <(k completion bash | sed s/kubectl/k/g)
+
 for binary in {kustomize,packer,terraform,vagrant,vault}; do
     if hash "$binary" 2>/dev/null; then
         # shellcheck source=/dev/null
