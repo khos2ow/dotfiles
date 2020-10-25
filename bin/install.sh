@@ -259,6 +259,7 @@ install_apps() {
 		google-chrome-stable \
 		meld \
 		parcellite \
+		shellcheck \
 		spotify-client \
 		telegram-desktop \
 		--no-install-recommends
@@ -407,7 +408,7 @@ install_golang() {
 	# go get github.com/genuinetools/pepper
 	# go get github.com/genuinetools/reg
 	# go get github.com/genuinetools/udict
-	# go get github.com/genuinetools/weather
+	go get github.com/genuinetools/weather
 
 	# go get github.com/jessfraz/gmailfilters
 	# go get github.com/jessfraz/junk/sembump
