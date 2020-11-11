@@ -1,1 +1,2 @@
-i3xrocks.date.format2: + %a %d %B, %H:%M
+i3xrocks.date.format2: %a %d %B, %H:%M
+i3-wm.bar.trayoutput: none
