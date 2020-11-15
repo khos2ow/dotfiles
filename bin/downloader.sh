@@ -87,6 +87,17 @@ BINARIES=$(
   "url": "https://github.com/kubernetes/kops/releases/download/v<VERSION>/kops-linux-amd64"
 },
 {
+  "name": "kubebuilder",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "kubernetes-sigs/kubebuilder",
+  "target": "kubebuilder_<VERSION>_linux_amd64/bin/",
+  "type": "tar.gz",
+  "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_<VERSION>_linux_amd64.tar.gz"
+},
+{
   "name": "kubectl",
   "latest": {
     "type": "URL",
@@ -415,7 +426,7 @@ fetch_and_unpack() {
     esac
 
     if [ -n "${TARGET}" ]; then
-        TARGET="${TARGET//\//}"
+        TARGET=$(echo "$TARGET" | sed 's/\(.*\)\//\1/')
 
         mv "/tmp/${TARGET}/${NAME}" "/tmp/${NAME}"
         rm -rf "/tmp/${TARGET}"
@@ -475,6 +486,7 @@ Following tools and binaries are supported:
 | K | k9s            |
 |   | kind           |
 |   | kops           |
+|   | kubebuilder    |
 |   | kubectl        |
 |   | kubie          |
 |   | kustomize      |
@@ -496,29 +508,6 @@ Following tools and binaries are supported:
 |   | velero         |
 └---┴----------------┘
 LIST
-    # ┌---┬----------------------------------┐
-    # | D | docker-compose    docker-machine |
-    # ├---┼----------------------------------┤
-    # | H | helm                             |
-    # ├---┼----------------------------------┤
-    # | K | kind              kops           |
-    # |   | kubectl           kubie          |
-    # |   | kustomize                        |
-    # ├---┼----------------------------------┤
-    # | M | minikube                         |
-    # ├---┼----------------------------------┤
-    # | P | packer                           |
-    # ├---┼----------------------------------┤
-    # | R | rke                              |
-    # ├---┼----------------------------------┤
-    # | S | skaffold                         |
-    # ├---┼----------------------------------┤
-    # | T | terraform         terraform-docs |
-    # |   | tilt                             |
-    # ├---┼----------------------------------┤
-    # | V | vagrant           vault          |
-    # |   | velero                           |
-    # └---┴----------------------------------┘
 }
 
 usage() {
