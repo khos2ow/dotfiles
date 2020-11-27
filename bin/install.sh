@@ -259,6 +259,7 @@ install_apps() {
 		google-chrome-stable \
 		meld \
 		parcellite \
+		rhythmbox \
 		shellcheck \
 		spotify-client \
 		telegram-desktop \
