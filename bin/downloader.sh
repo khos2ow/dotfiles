@@ -109,6 +109,17 @@ BINARIES=$(
   "url": "https://storage.googleapis.com/kubernetes-release/release/v<VERSION>/bin/linux/amd64/kubectl"
 },
 {
+  "name": "kubectl-crossplane",
+  "latest": {
+    "type": "URL",
+    "url": "https://releases.crossplane.io/alpha/current/version"
+  },
+  "repo": "",
+  "target": "",
+  "type": "",
+  "url": "https://releases.crossplane.io/alpha/current/bin/linux_amd64/crank"
+},
+{
   "name": "kubie",
   "latest": {
     "type": "Release",
