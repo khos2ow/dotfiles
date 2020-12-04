@@ -474,40 +474,40 @@ install() {
 }
 
 list_tools() {
-    cat <<LIST
-Following tools and binaries are supported:
+    printf "Following tools and binaries are supported:\n\n"
 
-┌---┬----------------┐
-| D | docker-compose |
-|   | docker-machine |
-├---┼----------------┤
-| H | helm           |
-├---┼----------------┤
-| K | k9s            |
-|   | kind           |
-|   | kops           |
-|   | kubebuilder    |
-|   | kubectl        |
-|   | kubie          |
-|   | kustomize      |
-├---┼----------------┤
-| M | minikube       |
-├---┼----------------┤
-| P | packer         |
-├---┼----------------┤
-| R | rke            |
-├---┼----------------┤
-| S | skaffold       |
-├---┼----------------┤
-| T | terraform      |
-|   | terraform-docs |
-|   | tilt           |
-├---┼----------------┤
-| V | vagrant        |
-|   | vault          |
-|   | velero         |
-└---┴----------------┘
-LIST
+    local max_length=0
+    while read -r object; do
+        if [[ ${#object} -gt $max_length ]]; then
+            max_length=${#object}
+        fi
+    done < <(echo "${BINARIES}" | jq -r '. |= sort_by(.name) | .[].name')
+
+    # shellcheck disable=SC2183
+    dash_line=$(printf "%*s" "$max_length")
+    dash_line=${dash_line// /-}
+
+    # shellcheck disable=SC2183
+    empty_line=$(printf '%*s' "$max_length")
+
+    printf "┌---┬-%s-┐\n"  "${dash_line}"
+
+    local last_char=""
+    while read -r object; do
+        this_char=$(echo "${object}" | head -c 1 | tr '[:lower:]' '[:upper:]')
+        if [[ "${this_char}" == "${last_char}" ]]; then
+            printf "|   |"
+        else
+            if [[ "${last_char}" != "" ]]; then
+                printf "├---┼-%s-┤\n" "${dash_line}"
+            fi
+            printf "| %s |" "${this_char}"
+            last_char="${this_char}"
+        fi
+        printf " %s %s|\n" "${object}" "${empty_line:${#object}}"
+    done < <(echo "${BINARIES}" | jq -r '. |= sort_by(.name) | .[].name')
+
+    printf "└---┴-%s-┘\n"  "${dash_line}"
 }
 
 usage() {
