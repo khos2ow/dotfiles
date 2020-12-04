@@ -32,6 +32,18 @@ unaws() {
 	done
 }
 
+deploy_crossplane_devel() {
+	local ns="crossplane-system"
+	kubectl get namespace ${ns} 2>/dev/null || kubectl create namespace ${ns}
+	kubectl config set-context --current --namespace ${ns}
+	helm upgrade \
+		--devel \
+		--install crossplane \
+		--namespace ${ns} \
+		--set alpha.oam.enabled=true \
+		crossplane-master/crossplane
+}
+
 contributors() {
 	if [ -z "$1" ] && [ -z "$2" ]; then
 		echo "Error: refs are missing. e.g. contributors <old_ref> <new_ref> "
