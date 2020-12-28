@@ -9,16 +9,6 @@ format = """\
     $git_commit\
     $git_state\
     $git_status\
-    $docker_context\
-    $package\
-    $golang\
-    $java\
-    $python\
-    $ruby\
-    $rust\
-    $helm\
-    $terraform\
-    $memory_usage\
     $aws\
     $env_var\
     $cmd_duration\
@@ -42,9 +32,6 @@ style = "bold white"
 read_only_symbol=" :"
 read_only_symbol_style = "bold red"
 
-[docker]
-symbol = " "
-
 [git_branch]
 symbol = " "
 
@@ -54,13 +41,6 @@ format = "[$hash]($style) "
 [git_status]
 format = "([$all_status$ahead_behind]($style) )"
 
-[golang]
-symbol = " "
-
-[helm]
-format = "via [$symbol$version]($style) "
-style = "bold white"
-
 [kubernetes]
 disabled = false
 style = "bold fg:#63b2e7"
@@ -68,18 +48,8 @@ style = "bold fg:#63b2e7"
 [line_break]
 disabled = true
 
-[package]
-symbol = " "
-
-[python]
-symbol = " "
-
 [status]
 style = "bold red"
 symbol = ""
 format = "[$status]($style) "
 disabled = false
-
-[terraform]
-symbol = ""
-disabled = true
