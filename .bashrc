@@ -156,7 +156,7 @@ done
 		grep -v "[?*]" | cut -d " " -f2 |
 		tr ' ' '\n')" scp sftp ssh
 
-for file in ~/.{aliases,aliases-work,completion,functions,path,extra,exports}; do
+for file in ~/.{aliases,aliases-private,aliases-work,completion,functions,path,extra,exports}; do
 	if [[ -r "$file" ]] && [[ -f "$file" ]]; then
 		# shellcheck source=/dev/null
 		source "$file"
