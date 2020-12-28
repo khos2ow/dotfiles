@@ -29,6 +29,7 @@ BINARIES=$(
   "repo": "docker/compose",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/docker/compose/releases/download/<VERSION>/docker-compose-linux-x86_64"
 },
 {
@@ -40,6 +41,7 @@ BINARIES=$(
   "repo": "docker/machine",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/docker/machine/releases/download/v<VERSION>/docker-machine-linux-x86_64"
 },
 {
@@ -51,6 +53,7 @@ BINARIES=$(
   "repo": "helm/helm",
   "target": "linux-amd64/",
   "type": "tar.gz",
+  "version_cmd": "version --short",
   "url": "https://get.helm.sh/helm-v<VERSION>-linux-amd64.tar.gz"
 },
 {
@@ -62,6 +65,7 @@ BINARIES=$(
   "repo": "derailed/k9s",
   "target": "",
   "type": "tar.gz",
+  "version_cmd": "version --short",
   "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_Linux_x86_64.tar.gz"
 },
 {
@@ -73,6 +77,7 @@ BINARIES=$(
   "repo": "kubernetes-sigs/kind",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/kubernetes-sigs/kind/releases/download/v<VERSION>/kind-linux-amd64"
 },
 {
@@ -84,6 +89,7 @@ BINARIES=$(
   "repo": "kubernetes/kops",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/kubernetes/kops/releases/download/v<VERSION>/kops-linux-amd64"
 },
 {
@@ -95,6 +101,7 @@ BINARIES=$(
   "repo": "kubernetes-sigs/kubebuilder",
   "target": "kubebuilder_<VERSION>_linux_amd64/bin/",
   "type": "tar.gz",
+  "version_cmd": "",
   "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_<VERSION>_linux_amd64.tar.gz"
 },
 {
@@ -106,18 +113,20 @@ BINARIES=$(
   "repo": "",
   "target": "",
   "type": "",
+  "version_cmd": "version --short --client",
   "url": "https://storage.googleapis.com/kubernetes-release/release/v<VERSION>/bin/linux/amd64/kubectl"
 },
 {
   "name": "kubectl-crossplane",
   "latest": {
     "type": "URL",
-    "url": "https://releases.crossplane.io/alpha/current/version"
+    "url": "https://releases.crossplane.io/stable/current/version"
   },
   "repo": "",
   "target": "",
   "type": "",
-  "url": "https://releases.crossplane.io/alpha/current/bin/linux_amd64/crank"
+  "version_cmd": "",
+  "url": "https://releases.crossplane.io/stable/current/bin/linux_amd64/crank"
 },
 {
   "name": "kubie",
@@ -128,6 +137,7 @@ BINARIES=$(
   "repo": "sbstp/kubie",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/sbstp/kubie/releases/download/v<VERSION>/kubie-linux-amd64"
 },
 {
@@ -140,6 +150,7 @@ BINARIES=$(
   "repo": "",
   "target": "",
   "type": "tar.gz",
+  "version_cmd": "version --short",
   "url": "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/v<VERSION>/kustomize_v<VERSION>_linux_amd64.tar.gz"
 },
 {
@@ -151,6 +162,7 @@ BINARIES=$(
   "repo": "kubernetes/minikube",
   "target": "",
   "type": "",
+  "version_cmd": "version --short",
   "url": "https://storage.googleapis.com/minikube/releases/v<VERSION>/minikube-linux-amd64"
 },
 {
@@ -162,6 +174,7 @@ BINARIES=$(
   "repo": "hashicorp/packer",
   "target": "",
   "type": "zip",
+  "version_cmd": "",
   "url": "https://releases.hashicorp.com/packer/<VERSION>/packer_<VERSION>_linux_amd64.zip"
 },
 {
@@ -173,6 +186,7 @@ BINARIES=$(
   "repo": "rancher/rke",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/rancher/rke/releases/download/v<VERSION>/rke_linux-amd64"
 },
 {
@@ -184,6 +198,7 @@ BINARIES=$(
   "repo": "GoogleContainerTools/skaffold",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://storage.googleapis.com/skaffold/releases/v<VERSION>/skaffold-linux-amd64"
 },
 {
@@ -195,6 +210,7 @@ BINARIES=$(
   "repo": "hashicorp/terraform",
   "target": "",
   "type": "zip",
+  "version_cmd": "",
   "url": "https://releases.hashicorp.com/terraform/<VERSION>/terraform_<VERSION>_linux_amd64.zip"
 },
 {
@@ -206,6 +222,7 @@ BINARIES=$(
   "repo": "terraform-docs/terraform-docs",
   "target": "",
   "type": "",
+  "version_cmd": "",
   "url": "https://github.com/terraform-docs/terraform-docs/releases/download/v<VERSION>/terraform-docs-v<VERSION>-linux-amd64"
 },
 {
@@ -217,6 +234,7 @@ BINARIES=$(
   "repo": "tilt-dev/tilt",
   "target": "",
   "type": "tar.gz",
+  "version_cmd": "",
   "url": "https://github.com/tilt-dev/tilt/releases/download/v<VERSION>/tilt.<VERSION>.linux.x86_64.tar.gz"
 },
 {
@@ -228,6 +246,7 @@ BINARIES=$(
   "repo": "hashicorp/vagrant",
   "target": "",
   "type": "zip",
+  "version_cmd": "--version",
   "url": "https://releases.hashicorp.com/vagrant/<VERSION>/vagrant_<VERSION>_linux_amd64.zip"
 },
 {
@@ -239,6 +258,7 @@ BINARIES=$(
   "repo": "hashicorp/vault",
   "target": "",
   "type": "zip",
+  "version_cmd": "",
   "url": "https://releases.hashicorp.com/vault/<VERSION>/vault_<VERSION>_linux_amd64.zip"
 },
 {
@@ -250,6 +270,7 @@ BINARIES=$(
   "repo": "vmware-tanzu/velero",
   "target": "velero-v<VERSION>-linux-amd64/",
   "type": "tar.gz",
+  "version_cmd": "version --client-only",
   "url": "https://github.com/vmware-tanzu/velero/releases/download/v<VERSION>/velero-v<VERSION>-linux-amd64.tar.gz"
 }]
 EOF
@@ -284,7 +305,12 @@ get_tmpfile() {
 }
 
 installed_version() {
-    if "$NAME" --version >/dev/null 2>&1; then
+    local version_cmd=""
+    version_cmd="$(echo "$BINARY" | jq -r '.version_cmd')"
+
+    if [ -n "$version_cmd" ] && [ "$version_cmd" != "null" ]; then
+        eval "$NAME" "$version_cmd"
+    elif "$NAME" --version >/dev/null 2>&1; then
         "$NAME" --version
     elif "$NAME" version >/dev/null 2>&1; then
         "$NAME" version
@@ -312,6 +338,7 @@ latest_version() {
     Release)
         fetch "https://api.github.com/repos/${repo}/releases" |
             jq -r '.[] | select(.prerelease == false).tag_name' |
+            sort -V -r |
             head -1
         ;;
     Tag)
