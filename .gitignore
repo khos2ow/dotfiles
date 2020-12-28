@@ -30,5 +30,8 @@ Session.vim
 .rainbow_oauth
 .nginx/conf.d/*
 
+# Private aliases
+.aliases-private
+
 # Work Laptop only
 .aliases-work
