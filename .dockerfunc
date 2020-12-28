@@ -6,6 +6,11 @@ export DOCKER_REPO_PREFIX=jess
 #
 # Helper Functions
 #
+dcleannone(){
+	local images
+	mapfile -t images < <(docker images | grep '<none>' | awk '{print $3}' 2>/dev/null)
+	docker rmi "${images[@]}" 2>/dev/null
+}
 dcleanup(){
 	local containers
 	mapfile -t containers < <(docker ps -aq 2>/dev/null)
