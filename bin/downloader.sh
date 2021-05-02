@@ -202,6 +202,18 @@ BINARIES=$(
   "url": "https://storage.googleapis.com/skaffold/releases/v<VERSION>/skaffold-linux-amd64"
 },
 {
+  "name": "starship",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "starship/starship",
+  "target": "",
+  "type": "tar.gz",
+  "version_cmd": "",
+  "url": "https://github.com/starship/starship/releases/download/v<VERSION>/starship-x86_64-unknown-linux-gnu.tar.gz"
+},
+{
   "name": "terraform",
   "latest": {
     "type": "Tag",
