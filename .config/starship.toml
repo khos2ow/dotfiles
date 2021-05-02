@@ -29,8 +29,8 @@ symbol = ""
 [directory]
 truncation_length = 0
 style = "bold white"
-read_only_symbol=" :"
-read_only_symbol_style = "bold red"
+read_only=" :"
+read_only_style = "bold red"
 
 [git_branch]
 symbol = " "
