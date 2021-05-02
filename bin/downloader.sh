@@ -524,6 +524,11 @@ install() {
 }
 
 list_tools() {
+    if [ "$SHORT" == "true" ]; then
+	echo "${BINARIES}" | jq -r '. |= sort_by(.name) | .[].name'
+	return
+    fi
+
     printf "Following tools and binaries are supported:\n\n"
 
     local max_length=0
@@ -576,6 +581,7 @@ Flags:
   -b, --bin-dir string     path to bin directory (default: /usr/loca/bin)
   -h, --help               print this help
   -o, --override boolean   override installed binary with new version (default: true)
+      --short boolean      show short list (default: false)
   -v, --version string     specific binary version to download
   -y, --yes boolean        answer yes to the questions (default: false)
 USAGE
@@ -586,6 +592,7 @@ COMMAND=""
 BINARY=""
 VERSION="latest"
 OVERRIDE="true"
+SHORT="false"
 FORCE=
 
 while [ "$#" -gt 0 ]; do
@@ -628,6 +635,14 @@ while [ "$#" -gt 0 ]; do
         ;;
     --override=*)
         OVERRIDE="${1#*=}"
+        shift 1
+        ;;
+    --short)
+        SHORT=$2
+        shift 2
+        ;;
+    --short=*)
+        SHORT="${1#*=}"
         shift 1
         ;;
     -v | --version)
