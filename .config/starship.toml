@@ -44,6 +44,8 @@ format = "([$all_status$ahead_behind]($style) )"
 [kubernetes]
 disabled = false
 style = "bold fg:#63b2e7"
+# [kubernetes.context_aliases]
+# "<example-cluster-name>" = "<alias>"
 
 [line_break]
 disabled = true
