@@ -281,9 +281,9 @@ BINARIES=$(
   },
   "repo": "terraform-docs/terraform-docs",
   "target": "",
-  "type": "",
+  "type": "tar.gz",
   "version_cmd": "",
-  "url": "https://github.com/terraform-docs/terraform-docs/releases/download/v<VERSION>/terraform-docs-v<VERSION>-linux-amd64"
+  "url": "https://github.com/terraform-docs/terraform-docs/releases/download/v<VERSION>/terraform-docs-v<VERSION>-linux-amd64.tar.gz"
 },
 {
   "name": "tilt",
