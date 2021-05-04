@@ -270,6 +270,7 @@ install_apps() {
 		shellcheck \
 		spotify-client \
 		telegram-desktop \
+		vlc \
 		--no-install-recommends
 
 	apt install -y \
