@@ -81,6 +81,18 @@ BINARIES=$(
   "url": "https://get.helm.sh/helm-v<VERSION>-linux-amd64.tar.gz"
 },
 {
+  "name": "hugo",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "gohugoio/hugo",
+  "target": "",
+  "type": "tar.gz",
+  "version_cmd": "",
+  "url": "https://github.com/gohugoio/hugo/releases/download/v<VERSION>/hugo_extended_<VERSION>_Linux-64bit.tar.gz"
+},
+{
   "name": "k9s",
   "latest": {
     "type": "Release",
