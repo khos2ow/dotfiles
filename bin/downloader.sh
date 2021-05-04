@@ -129,6 +129,18 @@ BINARIES=$(
   "url": "https://github.com/kubernetes/kops/releases/download/v<VERSION>/kops-linux-amd64"
 },
 {
+  "name": "kompose",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "kubernetes/kompose",
+  "target": "",
+  "type": "",
+  "version_cmd": "",
+  "url": "https://github.com/kubernetes/kompose/releases/download/v<VERSION>/kompose-linux-amd64"
+},
+{
   "name": "kubebuilder",
   "latest": {
     "type": "Release",
