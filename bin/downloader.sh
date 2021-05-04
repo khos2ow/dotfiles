@@ -45,6 +45,18 @@ BINARIES=$(
   "url": "https://github.com/docker/machine/releases/download/v<VERSION>/docker-machine-linux-x86_64"
 },
 {
+  "name": "goreleaser",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "goreleaser/goreleaser",
+  "target": "",
+  "type": "tar.gz",
+  "version_cmd": "",
+  "url": "https://github.com/goreleaser/goreleaser/releases/download/v<VERSION>/goreleaser_Linux_x86_64.tar.gz"
+},
+{
   "name": "helm",
   "latest": {
     "type": "Release",
