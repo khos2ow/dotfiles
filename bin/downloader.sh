@@ -57,6 +57,18 @@ BINARIES=$(
   "url": "https://github.com/goreleaser/goreleaser/releases/download/v<VERSION>/goreleaser_Linux_x86_64.tar.gz"
 },
 {
+  "name": "gomplate",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "hairyhenderson/gomplate",
+  "target": "",
+  "type": "",
+  "version_cmd": "",
+  "url": "https://github.com/hairyhenderson/gomplate/releases/download/v<VERSION>/gomplate_linux-amd64"
+},
+{
   "name": "helm",
   "latest": {
     "type": "Release",
