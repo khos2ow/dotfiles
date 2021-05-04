@@ -332,6 +332,18 @@ BINARIES=$(
   "type": "tar.gz",
   "version_cmd": "version --client-only",
   "url": "https://github.com/vmware-tanzu/velero/releases/download/v<VERSION>/velero-v<VERSION>-linux-amd64.tar.gz"
+},
+{
+  "name": "yq",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "mikefarah/yq",
+  "target": "",
+  "type": "",
+  "version_cmd": "version --client-only",
+  "url": "https://github.com/mikefarah/yq/releases/download/v<VERSION>/yq_linux_amd64"
 }]
 EOF
 )
