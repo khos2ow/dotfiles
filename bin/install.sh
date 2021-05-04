@@ -232,6 +232,12 @@ setup_sources_apps() {
 	deb http://repository.spotify.com stable non-free
 	EOF
 
+	# OBS Studio
+	cat <<-EOF > /etc/apt/sources.list.d/obs-studio.list
+	deb http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ groovy main
+	# deb-src http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ groovy main
+	EOF
+
 	# Import the Google Chrome public key
 	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
 
@@ -258,6 +264,7 @@ install_apps() {
 		gimp \
 		google-chrome-stable \
 		meld \
+		obs-studio \
 		parcellite \
 		rhythmbox \
 		shellcheck \
