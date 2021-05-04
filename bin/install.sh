@@ -261,6 +261,7 @@ install_apps() {
 		containerd.io \
 		docker-ce \
 		docker-ce-cli \
+		ffmpeg \
 		gimp \
 		google-chrome-stable \
 		meld \
