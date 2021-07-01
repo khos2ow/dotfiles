@@ -45,10 +45,10 @@ deploy_crossplane_devel() {
 }
 
 contributors() {
-	if [ -z "$1" ] && [ -z "$2" ]; then
-		echo "Error: refs are missing. e.g. contributors <old_ref> <new_ref> "
+	if [ -z "$1" ] || [ -z "$2" ]; then
+		echo "Error: refs are missing. e.g. contributors <old_ref> <new_ref>"
 	else
-		git log "$2".."$1" |
+		git log "${1}..${2}" |
 			grep ^Author: |
 			sed 's/ <.*//; s/^Author: //' |
 			sort |
