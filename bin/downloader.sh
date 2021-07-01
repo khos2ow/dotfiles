@@ -538,9 +538,16 @@ fetch_and_unpack() {
     esac
 
     if [ -n "${TARGET}" ]; then
-        TARGET=$(echo "$TARGET" | sed 's/\(.*\)\//\1/')
+        TARGET=$(echo "$TARGET" | cut -d/ -f1)
 
-        mv "/tmp/${TARGET}/${NAME}" "/tmp/${NAME}"
+        local targetfile=""
+        targetfile=$(echo "$TARGET" | cut -d/ -f2)
+
+        if [ -z "$targetfile" ]; then
+          targetfile="$NAME"
+        fi
+
+        mv "/tmp/${TARGET}/${targetfile}" "/tmp/${NAME}"
         rm -rf "/tmp/${TARGET}"
     fi
 
