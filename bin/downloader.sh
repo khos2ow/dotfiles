@@ -250,6 +250,30 @@ BINARIES=$(
   "url": "https://storage.googleapis.com/skaffold/releases/v<VERSION>/skaffold-linux-amd64"
 },
 {
+  "name": "spotifyd",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "Spotifyd/spotifyd",
+  "target": "",
+  "type": "tar.gz",
+  "version_cmd": "",
+  "url": "https://github.com/Spotifyd/spotifyd/releases/download/v<VERSION>/spotifyd-linux-full.tar.gz"
+},
+{
+  "name": "spt",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "Rigellute/spotify-tui",
+  "target": "",
+  "type": "tar.gz",
+  "version_cmd": "",
+  "url": "https://github.com/Rigellute/spotify-tui/releases/download/v<VERSION>/spotify-tui-linux.tar.gz"
+},
+{
   "name": "starship",
   "latest": {
     "type": "Release",
