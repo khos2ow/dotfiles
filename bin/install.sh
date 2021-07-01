@@ -265,6 +265,7 @@ install_apps() {
 		gimp \
 		google-chrome-stable \
 		meld \
+		npm \
 		obs-studio \
 		parcellite \
 		rhythmbox \
