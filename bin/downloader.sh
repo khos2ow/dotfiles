@@ -519,11 +519,13 @@ fetch_and_unpack() {
     "")
         fetch "${URL}" >"/tmp/${NAME}"
         ;;
-    tar.gz | zip)
+    tar.gz | tar.xz | zip)
         tmpfile="$(get_tmpfile "${TYPE}")"
         fetch "${URL}" >"${tmpfile}"
         if [ "${TYPE}" = "tar.gz" ]; then
             tar -xzf "${tmpfile}" -C /tmp 2>&1
+        elif [ "${TYPE}" = "tar.xz" ]; then
+            tar -xJf "${tmpfile}" -C /tmp 2>&1
         elif [ "${TYPE}" = "zip" ]; then
             unzip "${tmpfile}" -d /tmp 2>&1
         fi
