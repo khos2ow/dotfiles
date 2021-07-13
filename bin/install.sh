@@ -46,22 +46,25 @@ setup_sources_min() {
 		lsb-release \
 		--no-install-recommends
 
+	DISTRO=$(lsb_release -c -s)
+	export DISTRO
+
 	# hack for latest git (don't judge)
 	cat <<-EOF > /etc/apt/sources.list.d/git-core.list
-	deb http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/git-core/ppa/ubuntu xenial main
+	deb [signed-by=/usr/share/keyrings/git-core-archive-keyring.gpg] http://ppa.launchpad.net/git-core/ppa/ubuntu $DISTRO main
+	# deb-src [signed-by=/usr/share/keyrings/git-core-archive-keyring.gpg] http://ppa.launchpad.net/git-core/ppa/ubuntu $DISTRO main
 	EOF
 
-	# iovisor/bcc-tools
+	# Add iovisor/bcc-tools distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
-	deb https://repo.iovisor.org/apt/xenial xenial main
+	deb [signed-by=/usr/share/keyrings/iovisor-archive-keyring.gpg] https://repo.iovisor.org/apt/bionic bionic main
 	EOF
 
-	# add the git-core ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys E1DD270288B4E6030699E45FA1715D88E1DF1F24
+	# Import git-core public key
+	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xe1dd270288b4e6030699e45fa1715d88e1df1f24" | gpg --dearmor > /usr/share/keyrings/git-core-archive-keyring.gpg
 
-	# add the iovisor/bcc-tools gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 648A4A16A23015EEF4A66B8E4052245BD4284CDD
+	# Import iovisor/bcc-tools public key
+	curl -fsSL https://repo.iovisor.org/GPG-KEY | gpg --dearmor > /usr/share/keyrings/iovisor-archive-keyring.gpg
 
 	# turn off translations, speed up apt update
 	mkdir -p /etc/apt/apt.conf.d
@@ -73,48 +76,29 @@ setup_sources_min() {
 setup_sources() {
 	setup_sources_min;
 
-	cat <<-EOF > /etc/apt/sources.list
-	deb http://httpredir.debian.org/debian buster main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster main contrib non-free
+	DISTRO=$(lsb_release -c -s)
+	export DISTRO
 
-	deb http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-	deb-src http://httpredir.debian.org/debian/ buster-updates main contrib non-free
-
-	deb http://security.debian.org/ buster/updates main contrib non-free
-	deb-src http://security.debian.org/ buster/updates main contrib non-free
-
-	deb http://httpredir.debian.org/debian experimental main contrib non-free
-	deb-src http://httpredir.debian.org/debian experimental main contrib non-free
-	EOF
-
-	# yubico
+	# Add yubico distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/yubico.list
-	deb http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
-	deb-src http://ppa.launchpad.net/yubico/stable/ubuntu xenial main
+	deb [signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
+	# deb-src [signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
 	EOF
 
 	# Create an environment variable for the correct distribution
-	CLOUD_SDK_REPO="cloud-sdk-$(lsb_release -c -s)"
+	CLOUD_SDK_REPO="cloud-sdk-bionic"
 	export CLOUD_SDK_REPO
 
-	# Add the Cloud SDK distribution URI as a package source
+	# Add Cloud SDK distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
+	deb [signed-by=/usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg] http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
 	EOF
 
-	# Import the Google Cloud Platform public key
-	curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+	# Import yubico public key
+	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3653e21064b19d134466702e43d5c49532cba1a9" | gpg --dearmor > /usr/share/keyrings/yubico-archive-keyring.gpg
 
-	# Add the Google Chrome distribution URI as a package source
-	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
-	deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
-	EOF
-
-	# Import the Google Chrome public key
-	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
-
-	# add the yubico ppa gpg key
-	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 3653E21064B19D134466702E43D5C49532CBA1A9
+	# Import Google Cloud Platform public key
+	curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor > /usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg
 }
 
 base_min() {
@@ -212,43 +196,57 @@ base() {
 
 # sets up apt sources for applications
 setup_sources_apps() {
-	# Add the Google Chrome distribution URI as a package source
+	DISTRO=$(lsb_release -c -s)
+	export DISTRO
+
+	# Add Google Chrome distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
-	deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main
 	EOF
 
-	# Docker
+	# Add Docker distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/docker.list
-	deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
+	deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
 	EOF
 
-	# Codium
+	# Add Codium distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/vscodium.list
-	deb https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
+	deb [signed-by=/usr/share/keyrings/codium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
 	EOF
 
-	# Spotify
+	# Add Slack distribution URI as a package source
+	cat <<-EOF > /etc/apt/sources.list.d/slack.list
+	deb [signed-by=/usr/share/keyrings/slack-archive-keyring.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+	EOF
+
+	# Add Spotify distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/spotify.list
-	deb http://repository.spotify.com stable non-free
+	deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free
 	EOF
 
-	# OBS Studio
+	# Add OBS Studio distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/obs-studio.list
-	deb http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ groovy main
-	# deb-src http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ groovy main
+	deb [signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
+	# deb-src [signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
 	EOF
 
 	# Import the Google Chrome public key
-	curl https://dl.google.com/linux/linux_signing_key.pub | apt-key add -
+	curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg
 
 	# Import Docker public key
-	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /usr/share/keyrings/docker-archive-keyring.gpg
 
 	# Import Codium public key
-	curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | apt-key add -
+	curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | gpg --dearmor > /usr/share/keyrings/codium-archive-keyring.gpg
+
+	# Import Slack public key
+	curl -fsSL https://packagecloud.io/slacktechnologies/slack/gpgkey | gpg --dearmor > /usr/share/keyrings/slack-archive-keyring.gpg
 
 	# Import Spotify public key
-	curl -fsSL https://download.spotify.com/debian/pubkey.gpg | apt-key add -
+	curl -fsSL https://download.spotify.com/debian/pubkey_0D811D58.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
+
+	# Import OBS Studio public key
+	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xbc7345f522079769f5bbe987efc71127f425e228" | gpg --dearmor > /usr/share/keyrings/obsproject-archive-keyring.gpg
 }
 
 # installs application packages
@@ -353,7 +351,6 @@ setup_sudo() {
 	{ \
 		echo -e "Defaults	secure_path=\"/usr/local/go/bin:/home/${TARGET_USER}/.go/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/share/bcc/tools:/home/${TARGET_USER}/.cargo/bin\""; \
 		echo -e 'Defaults	env_keep += "ftp_proxy http_proxy https_proxy no_proxy GOPATH EDITOR"'; \
-		echo -e "${TARGET_USER} ALL=(ALL) NOPASSWD:ALL"; \
 		echo -e "${TARGET_USER} ALL=NOPASSWD: /sbin/ifconfig, /sbin/ifup, /sbin/ifdown, /sbin/ifquery"; \
 	} >> /etc/sudoers
 
