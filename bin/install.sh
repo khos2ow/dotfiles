@@ -398,39 +398,39 @@ install_golang() {
 	(
 	set -x
 	set +e
-	go get golang.org/x/lint/golint
-	go get golang.org/x/tools/cmd/cover
-	go get golang.org/x/tools/gopls
-	go get golang.org/x/review/git-codereview
-	go get golang.org/x/tools/cmd/goimports
-	go get golang.org/x/tools/cmd/gorename
-	go get golang.org/x/tools/cmd/guru
+	go install golang.org/x/lint/golint@latest
+	go install golang.org/x/tools/cmd/cover@latest
+	go install golang.org/x/tools/gopls@latest
+	go install golang.org/x/review/git-codereview@latest
+	go install golang.org/x/tools/cmd/goimports@latest
+	go install golang.org/x/tools/cmd/gorename@latest
+	go install golang.org/x/tools/cmd/guru@latest
 
-	# go get github.com/genuinetools/amicontained
-	# go get github.com/genuinetools/apk-file
-	# go get github.com/genuinetools/audit
-	# go get github.com/genuinetools/bpfd
-	# go get github.com/genuinetools/bpfps
-	# go get github.com/genuinetools/certok
-	# go get github.com/genuinetools/netns
-	# go get github.com/genuinetools/pepper
-	# go get github.com/genuinetools/reg
-	# go get github.com/genuinetools/udict
-	go get github.com/genuinetools/weather
+	# go install github.com/genuinetools/amicontained@latest
+	# go install github.com/genuinetools/apk-file@latest
+	# go install github.com/genuinetools/audit@latest
+	# go install github.com/genuinetools/bpfd@latest
+	# go install github.com/genuinetools/bpfps@latest
+	# go install github.com/genuinetools/certok@latest
+	# go install github.com/genuinetools/netns@latest
+	# go install github.com/genuinetools/pepper@latest
+	# go install github.com/genuinetools/reg@latest
+	# go install github.com/genuinetools/udict@latest
+	go install github.com/genuinetools/weather@latest
 
-	# go get github.com/jessfraz/gmailfilters
-	# go get github.com/jessfraz/junk/sembump
-	# go get github.com/jessfraz/secping
-	# go get github.com/jessfraz/ship
-	# go get github.com/jessfraz/tdash
+	# go install github.com/jessfraz/gmailfilters@latest
+	# go install github.com/jessfraz/junk/sembump@latest
+	# go install github.com/jessfraz/secping@latest
+	# go install github.com/jessfraz/ship@latest
+	# go install github.com/jessfraz/tdash@latest
 
-	go get github.com/axw/gocov/gocov
-	go get honnef.co/go/tools/cmd/staticcheck
+	go install github.com/axw/gocov/gocov@latest
+	go install honnef.co/go/tools/cmd/staticcheck@latest
 
 	# Tools for vimgo.
-	go get github.com/jstemmer/gotags
-	go get github.com/nsf/gocode
-	go get github.com/rogpeppe/godef
+	go install github.com/jstemmer/gotags@latest
+	go install github.com/nsf/gocode@latest
+	go install github.com/rogpeppe/godef@latest
 
 	# aliases=( genuinetools/contained.af genuinetools/binctr genuinetools/img docker/docker moby/buildkit opencontainers/runc )
 	# for project in "${aliases[@]}"; do
