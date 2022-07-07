@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for binary in {helm,kind,kops,kubectl,terraform-docs,velero}; do
+for binary in {clusterctl,helm,kind,kops,kubectl,terraform-docs,velero}; do
     if hash "$binary" 2>/dev/null; then
         # shellcheck source=/dev/null
         source <($binary completion bash)
