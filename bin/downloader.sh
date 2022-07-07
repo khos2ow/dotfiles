@@ -21,6 +21,18 @@ NO_COLOR="$(tput sgr0 2>/dev/null || echo '')"
 BINARIES=$(
     cat <<EOF
 [{
+  "name": "clusterctl",
+  "latest": {
+    "type": "Release",
+    "url": ""
+  },
+  "repo": "kubernetes-sigs/cluster-api",
+  "target": "",
+  "type": "",
+  "version_cmd": "",
+  "url": "https://github.com/kubernetes-sigs/cluster-api/releases/download/v<VERSION>/clusterctl-linux-amd64"
+},
+{
   "name": "docker-compose",
   "latest": {
     "type": "Release",
