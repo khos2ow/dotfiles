@@ -214,6 +214,11 @@ setup_sources_apps() {
 	deb [signed-by=/usr/share/keyrings/codium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
 	EOF
 
+	# Add Skype distribution URI as a package sourc
+	cat <<-EOF > /etc/apt/sources.list.d/skype-stable.list
+	deb [arch=amd64 signed-by=/usr/share/keyrings/skype-archive-keyring.gpg] https://repo.skype.com/deb stable main
+	EOF
+
 	# Add Slack distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/slack.list
 	deb [signed-by=/usr/share/keyrings/slack-archive-keyring.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
@@ -238,6 +243,9 @@ setup_sources_apps() {
 
 	# Import Codium public key
 	curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | gpg --dearmor > /usr/share/keyrings/codium-archive-keyring.gpg
+
+	# Import Skype public key
+	curl -fsSL https://repo.skype.com/data/SKYPE-GPG-KEY | gpg --dearmor > /usr/share/keyrings/skype-archive-keyring.gpg
 
 	# Import Slack public key
 	curl -fsSL https://packagecloud.io/slacktechnologies/slack/gpgkey | gpg --dearmor > /usr/share/keyrings/slack-archive-keyring.gpg
