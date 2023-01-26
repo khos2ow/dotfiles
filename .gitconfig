@@ -126,6 +126,7 @@
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 	trustctime = false
 	editor = vim
+	sshCommand = ssh -o ProxyCommand=\"connect -S 127.0.0.1:8780 %h %p\"
 
 [color]
 	# Use colors in Git commands that are capable of colored output when
