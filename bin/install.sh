@@ -85,20 +85,8 @@ setup_sources() {
 	# deb-src [signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
 	EOF
 
-	# Create an environment variable for the correct distribution
-	CLOUD_SDK_REPO="cloud-sdk-bionic"
-	export CLOUD_SDK_REPO
-
-	# Add Cloud SDK distribution URI as a package source
-	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb [signed-by=/usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg] http://packages.cloud.google.com/apt $CLOUD_SDK_REPO main
-	EOF
-
 	# Import yubico public key
 	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3653e21064b19d134466702e43d5c49532cba1a9" | gpg --dearmor > /usr/share/keyrings/yubico-archive-keyring.gpg
-
-	# Import Google Cloud Platform public key
-	curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor > /usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg
 }
 
 base_min() {
@@ -175,7 +163,6 @@ base() {
 		fwupd \
 		fwupdate \
 		gnupg-agent \
-		google-cloud-sdk \
 		iwd \
 		libapparmor-dev \
 		libimobiledevice6 \
@@ -204,6 +191,11 @@ setup_sources_apps() {
 	deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main
 	EOF
 
+	# Add Cloud SDK distribution URI as a package source
+	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
+	deb [signed-by=/usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+	EOF
+
 	# Add Docker distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/docker.list
 	deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable
@@ -215,7 +207,7 @@ setup_sources_apps() {
 	EOF
 
 	# Add Skype distribution URI as a package sourc
-	cat <<-EOF > /etc/apt/sources.list.d/skype-stable.list
+	cat <<-EOF > /etc/apt/sources.list.d/skype.list
 	deb [arch=amd64 signed-by=/usr/share/keyrings/skype-archive-keyring.gpg] https://repo.skype.com/deb stable main
 	EOF
 
@@ -235,8 +227,11 @@ setup_sources_apps() {
 	# deb-src [signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
 	EOF
 
-	# Import the Google Chrome public key
+	# Import Google Chrome public key
 	curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg
+
+	# Import Google Cloud Platform public key
+	curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor > /usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg
 
 	# Import Docker public key
 	curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor > /usr/share/keyrings/docker-archive-keyring.gpg
@@ -251,7 +246,7 @@ setup_sources_apps() {
 	curl -fsSL https://packagecloud.io/slacktechnologies/slack/gpgkey | gpg --dearmor > /usr/share/keyrings/slack-archive-keyring.gpg
 
 	# Import Spotify public key
-	curl -fsSL https://download.spotify.com/debian/pubkey_0D811D58.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
+	curl -fsSL https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
 
 	# Import OBS Studio public key
 	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xbc7345f522079769f5bbe987efc71127f425e228" | gpg --dearmor > /usr/share/keyrings/obsproject-archive-keyring.gpg
@@ -270,12 +265,14 @@ install_apps() {
 		ffmpeg \
 		gimp \
 		google-chrome-stable \
+		google-cloud-cli \
 		meld \
 		npm \
 		obs-studio \
 		parcellite \
 		rhythmbox \
 		shellcheck \
+		skypeforlinux \
 		spotify-client \
 		telegram-desktop \
 		vlc \
