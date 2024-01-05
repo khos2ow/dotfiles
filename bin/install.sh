@@ -294,7 +294,7 @@ install_apps() {
 	apt autoclean
 	apt clean
 
-	curl -fsSL https://starship.rs/install.sh | bash -s -- --yes
+	curl -fsSL https://starship.rs/install.sh | sh -s -- --yes
 }
 
 # install and configure dropbear
@@ -374,7 +374,8 @@ install_rust() {
 # install/update golang from source
 install_golang() {
 	export GO_VERSION
-	GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text")
+	GO_VERSION=$(curl -sSL "https://golang.org/VERSION?m=text" | head -1)
+	echo $GO_VERSION
 	export GO_SRC=/usr/local/go
 
 	# if we are passing the version
@@ -392,7 +393,8 @@ install_golang() {
 	# subshell
 	(
 	kernel=$(uname -s | tr '[:upper:]' '[:lower:]')
-	curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.${kernel}-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
+	#curl -sSL "https://storage.googleapis.com/golang/go${GO_VERSION}.${kernel}-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
+	curl -sSL "https://go.dev/dl/go${GO_VERSION}.${kernel}-amd64.tar.gz" | sudo tar -v -C /usr/local -xz
 	local user="$USER"
 	# rebuild stdlib for faster builds
 	sudo chown -R "${user}" /usr/local/go/pkg
