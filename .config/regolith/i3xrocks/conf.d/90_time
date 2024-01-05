@@ -1,5 +1,3 @@
 # Date Time
 [time]
-#command=export DATE_FORMAT="%a %d %B - %H:%M" && /usr/share/i3xrocks/time
-#command=date +"%a %d %B - %H:%M"
-interval=10
+interval=xresource:i3xrocks.time.interval 10
