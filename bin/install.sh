@@ -246,7 +246,7 @@ setup_sources_apps() {
 	curl -fsSL https://packagecloud.io/slacktechnologies/slack/gpgkey | gpg --dearmor > /usr/share/keyrings/slack-archive-keyring.gpg
 
 	# Import Spotify public key
-	curl -fsSL https://download.spotify.com/debian/pubkey_7A3A762FAFD4A51F.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
+	curl -fsSL https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
 
 	# Import OBS Studio public key
 	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xbc7345f522079769f5bbe987efc71127f425e228" | gpg --dearmor > /usr/share/keyrings/obsproject-archive-keyring.gpg
