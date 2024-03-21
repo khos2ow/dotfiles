@@ -206,7 +206,12 @@ setup_sources_apps() {
 	deb [signed-by=/usr/share/keyrings/codium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
 	EOF
 
-	# Add Skype distribution URI as a package sourc
+	# Add Signal distribution URI as a package source
+	cat <<-EOF > /etc/apt/sources.list.d/signal.list
+	deb [arch=amd64 signed-by=/usr/share/keyrings/signal-desktop-keyring.gpg] https://updates.signal.org/desktop/apt xenial main
+	EOF
+
+	# Add Skype distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/skype.list
 	deb [arch=amd64 signed-by=/usr/share/keyrings/skype-archive-keyring.gpg] https://repo.skype.com/deb stable main
 	EOF
@@ -238,6 +243,9 @@ setup_sources_apps() {
 
 	# Import Codium public key
 	curl -fsSL https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/raw/master/pub.gpg | gpg --dearmor > /usr/share/keyrings/codium-archive-keyring.gpg
+
+	# Import Signal public key
+	curl -fsSL https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > /usr/share/keyrings/signal-desktop-keyring.gpg
 
 	# Import Skype public key
 	curl -fsSL https://repo.skype.com/data/SKYPE-GPG-KEY | gpg --dearmor > /usr/share/keyrings/skype-archive-keyring.gpg
@@ -272,6 +280,7 @@ install_apps() {
 		parcellite \
 		rhythmbox \
 		shellcheck \
+		signal-desktop \
 		skypeforlinux \
 		spotify-client \
 		telegram-desktop \
