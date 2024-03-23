@@ -14,7 +14,7 @@
 export GOROOT=/usr/local/go
 
 # go path
-export GOPATH="${HOME}/work/go"
+export GOPATH="${HOME}/go"
 
 # update path
 export PATH=/usr/local/bin:${PATH}:/sbin

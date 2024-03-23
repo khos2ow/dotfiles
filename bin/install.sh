@@ -114,6 +114,7 @@ base_min() {
 		grep \
 		gzip \
 		hostname \
+		htop \
 		indent \
 		iptables \
 		jq \
@@ -160,6 +161,7 @@ base() {
 		apparmor \
 		bridge-utils \
 		cgroupfs-mount \
+		fdisk \
 		fwupd \
 		fwupdate \
 		gnupg-agent \
@@ -169,7 +171,9 @@ base() {
 		libltdl-dev \
 		libpam-systemd \
 		libseccomp-dev \
+		mate-calc \
 		pinentry-curses \
+		pluma \
 		scdaemon \
 		systemd \
 		--no-install-recommends
@@ -270,10 +274,12 @@ install_apps() {
 		containerd.io \
 		docker-ce \
 		docker-ce-cli \
+		evince \
 		ffmpeg \
 		gimp \
 		google-chrome-stable \
 		google-cloud-cli \
+		libreoffice \
 		meld \
 		npm \
 		obs-studio \
@@ -282,8 +288,8 @@ install_apps() {
 		shellcheck \
 		signal-desktop \
 		skypeforlinux \
+		slack-desktop \
 		spotify-client \
-		telegram-desktop \
 		vlc \
 		--no-install-recommends
 
