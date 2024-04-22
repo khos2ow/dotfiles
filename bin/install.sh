@@ -161,6 +161,7 @@ base() {
 		apparmor \
 		bridge-utils \
 		cgroupfs-mount \
+		connect-proxy \
 		fdisk \
 		fwupd \
 		fwupdate \
