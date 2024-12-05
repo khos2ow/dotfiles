@@ -203,11 +203,12 @@ BINARIES=$(
 {
   "name": "kustomize",
   "latest": {
-    "command": "latest_release \"kubernetes-sigs/kustomize\" \"kustomize\" | sed 's|kustomize/||g'",
+    "keyword": "kustomize/",
+    "command": "sed 's|kustomize/||g'",
     "type": "Command",
-    "url": "TODO"
+    "url": ""
   },
-  "repo": "",
+  "repo": "kubernetes-sigs/kustomize",
   "target": "",
   "type": "tar.gz",
   "version_cmd": "version --short",
@@ -437,11 +438,14 @@ latest_version() {
 
     case "$type" in
     Command)
-        # TODO
-        # fetch "https://api.github.com/repos/${repo}/releases" |
-        #     jq -r '.[] | select(.prerelease == false).tag_name' |
-        #     grep "${keyword}" |
-        #     head -1
+    	keyword="$(echo "$BINARY" | jq -r '.latest.keyword')"
+    	commands="$(echo "$BINARY" | jq -r '.latest.command')"
+
+        fetch "https://api.github.com/repos/${repo}/releases" |
+            jq -r '.[] | select(.prerelease == false).tag_name' |
+            grep "${keyword}" |
+            head -1 |
+			sed "s|${keyword}||g"
         ;;
     Release)
         fetch "https://api.github.com/repos/${repo}/releases" |
