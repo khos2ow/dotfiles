@@ -51,13 +51,13 @@ setup_sources_min() {
 
 	# hack for latest git (don't judge)
 	cat <<-EOF > /etc/apt/sources.list.d/git-core.list
-	deb [signed-by=/usr/share/keyrings/git-core-archive-keyring.gpg] http://ppa.launchpad.net/git-core/ppa/ubuntu $DISTRO main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/git-core-archive-keyring.gpg] http://ppa.launchpad.net/git-core/ppa/ubuntu $DISTRO main
 	# deb-src [signed-by=/usr/share/keyrings/git-core-archive-keyring.gpg] http://ppa.launchpad.net/git-core/ppa/ubuntu $DISTRO main
 	EOF
 
 	# Add iovisor/bcc-tools distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/iovisor.list
-	deb [signed-by=/usr/share/keyrings/iovisor-archive-keyring.gpg] https://repo.iovisor.org/apt/bionic bionic main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/iovisor-archive-keyring.gpg] https://repo.iovisor.org/apt/bionic bionic main
 	EOF
 
 	# Import git-core public key
@@ -81,7 +81,7 @@ setup_sources() {
 
 	# Add yubico distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/yubico.list
-	deb [signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
 	# deb-src [signed-by=/usr/share/keyrings/yubico-archive-keyring.gpg] http://ppa.launchpad.net/yubico/stable/ubuntu $DISTRO main
 	EOF
 
@@ -162,6 +162,7 @@ base() {
 		bridge-utils \
 		cgroupfs-mount \
 		connect-proxy \
+		cups \
 		fdisk \
 		fwupd \
 		fwupdate \
@@ -176,6 +177,7 @@ base() {
 		pinentry-curses \
 		pluma \
 		scdaemon \
+		simple-scan \
 		systemd \
 		--no-install-recommends
 
@@ -191,6 +193,11 @@ setup_sources_apps() {
 	DISTRO=$(lsb_release -c -s)
 	export DISTRO
 
+	# Add Element distribution URI as a package source
+	cat <<-EOF > /etc/apt/sources.list.d/element-io.list
+	deb [arch=amd64 signed-by=/usr/share/keyrings/element-io-archive-keyring.gpg] https://packages.element.io/debian/ default main
+	EOF
+
 	# Add Google Chrome distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-chrome.list
 	deb [arch=amd64 signed-by=/usr/share/keyrings/google-chrome-archive-keyring.gpg] http://dl.google.com/linux/chrome/deb/ stable main
@@ -198,7 +205,7 @@ setup_sources_apps() {
 
 	# Add Cloud SDK distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/google-cloud-sdk.list
-	deb [signed-by=/usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/google-cloud-sdk-archive-keyring.gpg] https://packages.cloud.google.com/apt cloud-sdk main
 	EOF
 
 	# Add Docker distribution URI as a package source
@@ -208,7 +215,7 @@ setup_sources_apps() {
 
 	# Add Codium distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/vscodium.list
-	deb [signed-by=/usr/share/keyrings/codium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/codium-archive-keyring.gpg] https://paulcarroty.gitlab.io/vscodium-deb-rpm-repo/debs/ vscodium main
 	EOF
 
 	# Add Signal distribution URI as a package source
@@ -217,25 +224,28 @@ setup_sources_apps() {
 	EOF
 
 	# Add Skype distribution URI as a package source
-	cat <<-EOF > /etc/apt/sources.list.d/skype.list
-	deb [arch=amd64 signed-by=/usr/share/keyrings/skype-archive-keyring.gpg] https://repo.skype.com/deb stable main
-	EOF
+	# cat <<-EOF > /etc/apt/sources.list.d/skype.list
+	# deb [arch=amd64 signed-by=/usr/share/keyrings/skype-archive-keyring.gpg] https://repo.skype.com/deb stable main
+	# EOF
 
 	# Add Slack distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/slack.list
-	deb [signed-by=/usr/share/keyrings/slack-archive-keyring.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/slack-archive-keyring.gpg] https://packagecloud.io/slacktechnologies/slack/debian/ jessie main
 	EOF
 
 	# Add Spotify distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/spotify.list
-	deb [signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free
+	deb [arch=amd64 signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free
 	EOF
 
 	# Add OBS Studio distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/obs-studio.list
-	deb [signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
-	# deb-src [signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
+	deb [arch=amd64 signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
+	# deb-src [arch=amd64 signed-by=/usr/share/keyrings/obsproject-archive-keyring.gpg] http://ppa.launchpad.net/obsproject/obs-studio/ubuntu/ $DISTRO main
 	EOF
+
+	# Import Element public key
+	curl -fsSL https://packages.element.io/debian/element-io-archive-keyring.gpg | gpg --dearmor > /usr/share/keyrings/element-io-archive-keyring.gpg
 
 	# Import Google Chrome public key
 	curl -fsSL https://dl.google.com/linux/linux_signing_key.pub | gpg --dearmor > /usr/share/keyrings/google-chrome-archive-keyring.gpg
@@ -253,13 +263,13 @@ setup_sources_apps() {
 	curl -fsSL https://updates.signal.org/desktop/apt/keys.asc | gpg --dearmor > /usr/share/keyrings/signal-desktop-keyring.gpg
 
 	# Import Skype public key
-	curl -fsSL https://repo.skype.com/data/SKYPE-GPG-KEY | gpg --dearmor > /usr/share/keyrings/skype-archive-keyring.gpg
+	# curl -fsSL https://repo.skype.com/data/SKYPE-GPG-KEY | gpg --dearmor > /usr/share/keyrings/skype-archive-keyring.gpg
 
 	# Import Slack public key
 	curl -fsSL https://packagecloud.io/slacktechnologies/slack/gpgkey | gpg --dearmor > /usr/share/keyrings/slack-archive-keyring.gpg
 
 	# Import Spotify public key
-	curl -fsSL https://download.spotify.com/debian/pubkey_6224F9941A8AA6D1.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
+	curl -fsSL https://download.spotify.com/debian/pubkey_C85668DF69375001.gpg | gpg --dearmor > /usr/share/keyrings/spotify-archive-keyring.gpg
 
 	# Import OBS Studio public key
 	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xbc7345f522079769f5bbe987efc71127f425e228" | gpg --dearmor > /usr/share/keyrings/obsproject-archive-keyring.gpg
@@ -275,11 +285,16 @@ install_apps() {
 		containerd.io \
 		docker-ce \
 		docker-ce-cli \
+		containerd.io \
+		docker-buildx-plugin \
+		docker-compose-plugin \
+		element-desktop \
 		evince \
 		ffmpeg \
 		gimp \
 		google-chrome-stable \
 		google-cloud-cli \
+		img2pdf \
 		libreoffice \
 		meld \
 		npm \
@@ -288,9 +303,9 @@ install_apps() {
 		rhythmbox \
 		shellcheck \
 		signal-desktop \
-		skypeforlinux \
 		slack-desktop \
 		spotify-client \
+		virt-manager \
 		vlc \
 		--no-install-recommends
 
