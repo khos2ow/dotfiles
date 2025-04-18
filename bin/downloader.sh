@@ -114,7 +114,7 @@ BINARIES=$(
   "target": "",
   "type": "tar.gz",
   "version_cmd": "version --short",
-  "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_Linux_x86_64.tar.gz"
+  "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_linux_amd64.tar.gz"
 },
 {
   "name": "kind",
