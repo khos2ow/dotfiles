@@ -87,7 +87,7 @@ BINARIES=$(
     "url": ""
   },
   "repo": "helm/helm",
-  "target": "linux-amd64/",
+  "target": "linux-amd64/helm",
   "type": "tar.gz",
   "version_cmd": "version --short",
   "url": "https://get.helm.sh/helm-v<VERSION>-linux-amd64.tar.gz"
@@ -114,7 +114,7 @@ BINARIES=$(
   "target": "",
   "type": "tar.gz",
   "version_cmd": "version --short",
-  "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_Linux_x86_64.tar.gz"
+  "url": "https://github.com/derailed/k9s/releases/download/v<VERSION>/k9s_linux_amd64.tar.gz"
 },
 {
   "name": "kind",
@@ -159,10 +159,10 @@ BINARIES=$(
     "url": ""
   },
   "repo": "kubernetes-sigs/kubebuilder",
-  "target": "kubebuilder_<VERSION>_linux_amd64/bin/",
-  "type": "tar.gz",
+  "target": "",
+  "type": "",
   "version_cmd": "",
-  "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_<VERSION>_linux_amd64.tar.gz"
+  "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_linux_amd64"
 },
 {
   "name": "kubectl",
@@ -574,7 +574,7 @@ fetch_and_unpack() {
     esac
 
     if [ -n "${TARGET}" ]; then
-        TARGET=$(echo "$TARGET" | cut -d/ -f1)
+        local target_base=$(echo "$TARGET" | cut -d/ -f1)
 
         local targetfile=""
         targetfile=$(echo "$TARGET" | cut -d/ -f2)
@@ -583,7 +583,7 @@ fetch_and_unpack() {
           targetfile="$NAME"
         fi
 
-        mv "/tmp/${TARGET}/${targetfile}" "/tmp/${NAME}"
+        mv "/tmp/${target_base}/${targetfile}" "/tmp/${NAME}"
         rm -rf "/tmp/${TARGET}"
     fi
 
