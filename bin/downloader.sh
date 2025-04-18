@@ -159,10 +159,10 @@ BINARIES=$(
     "url": ""
   },
   "repo": "kubernetes-sigs/kubebuilder",
-  "target": "kubebuilder_<VERSION>_linux_amd64/bin/",
-  "type": "tar.gz",
+  "target": "",
+  "type": "",
   "version_cmd": "",
-  "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_<VERSION>_linux_amd64.tar.gz"
+  "url": "https://github.com/kubernetes-sigs/kubebuilder/releases/download/v<VERSION>/kubebuilder_linux_amd64"
 },
 {
   "name": "kubectl",
