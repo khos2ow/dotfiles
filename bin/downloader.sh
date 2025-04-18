@@ -87,7 +87,7 @@ BINARIES=$(
     "url": ""
   },
   "repo": "helm/helm",
-  "target": "linux-amd64/",
+  "target": "linux-amd64/helm",
   "type": "tar.gz",
   "version_cmd": "version --short",
   "url": "https://get.helm.sh/helm-v<VERSION>-linux-amd64.tar.gz"
@@ -574,7 +574,7 @@ fetch_and_unpack() {
     esac
 
     if [ -n "${TARGET}" ]; then
-        TARGET=$(echo "$TARGET" | cut -d/ -f1)
+        local target_base=$(echo "$TARGET" | cut -d/ -f1)
 
         local targetfile=""
         targetfile=$(echo "$TARGET" | cut -d/ -f2)
@@ -583,7 +583,7 @@ fetch_and_unpack() {
           targetfile="$NAME"
         fi
 
-        mv "/tmp/${TARGET}/${targetfile}" "/tmp/${NAME}"
+        mv "/tmp/${target_base}/${targetfile}" "/tmp/${NAME}"
         rm -rf "/tmp/${TARGET}"
     fi
 
