@@ -26,12 +26,12 @@ dotfiles: ## Installs the dotfiles.
 	fc-cache -f -v || true
 
 	mkdir -p $(HOME)/.config
-	@ for file in $(shell find $(CURDIR)/.config -maxdepth 1 -not -path "$(CURDIR)/.config" -name "*" -not -name "fontconfig" -not -name "regolith"); do \
+	@ for file in $(shell find $(CURDIR)/.config -maxdepth 1 -not -path "$(CURDIR)/.config" -name "*" -not -name "fontconfig" -not -name "regolith3"); do \
 		f=$$(basename $$file); \
 		echo "ln -snf $(CURDIR)/.config/$$f $(HOME)/.config/$$f" ; \
 		ln -snf $(CURDIR)/.config/$$f $(HOME)/.config/$$f ; \
 	done
-	@ for dir in fontconfig regolith ; do \
+	@ for dir in fontconfig regolith3 ; do \
 		echo "mkdir -p $(HOME)/.config/$$dir" ; \
 		mkdir -p $(HOME)/.config/$$dir ; \
 		for file in $$(find "$(CURDIR)/.config/$$dir" -maxdepth 1 -not -path "$(CURDIR)/.config/$$dir"); do \
