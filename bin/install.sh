@@ -61,7 +61,7 @@ setup_sources_min() {
 	EOF
 
 	# Import git-core public key
-	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xe1dd270288b4e6030699e45fa1715d88e1df1f24" | gpg --dearmor > /usr/share/keyrings/git-core-archive-keyring.gpg
+	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xf911ab184317630c59970973e363c90f8f1b6217" | gpg --dearmor > /usr/share/keyrings/git-core-archive-keyring.gpg
 
 	# Import iovisor/bcc-tools public key
 	curl -fsSL https://repo.iovisor.org/GPG-KEY | gpg --dearmor > /usr/share/keyrings/iovisor-archive-keyring.gpg
@@ -86,7 +86,7 @@ setup_sources() {
 	EOF
 
 	# Import yubico public key
-	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x3653e21064b19d134466702e43d5c49532cba1a9" | gpg --dearmor > /usr/share/keyrings/yubico-archive-keyring.gpg
+	curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x990bd85d1c4f411abc0ece8dfa4ec8f2ee58ce0b" | gpg --dearmor > /usr/share/keyrings/yubico-archive-keyring.gpg
 }
 
 base_min() {
@@ -235,7 +235,7 @@ setup_sources_apps() {
 
 	# Add Spotify distribution URI as a package source
 	cat <<-EOF > /etc/apt/sources.list.d/spotify.list
-	deb [arch=amd64 signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] http://repository.spotify.com stable non-free
+	deb [arch=amd64 signed-by=/usr/share/keyrings/spotify-archive-keyring.gpg] https://repository.spotify.com stable non-free
 	EOF
 
 	# Add OBS Studio distribution URI as a package source
