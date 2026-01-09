@@ -4,3 +4,4 @@ wm.bar.position: top
 i3xrocks.warning: #E6E1CF
 regolith.look.path: /usr/share/regolith-look/lascaille
 regolith.wallpaper.file: /usr/share/regolith-look/lascaille/ESP_016895_1525_desktop.jpg
+wm.bar.status_config: ~/.config/regolith3/i3status/config.toml
