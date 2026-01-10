@@ -1,7 +1,15 @@
 i3xrocks.date.format2: %a %d %B, %H:%M
-wm.bar.trayoutput: primary
-wm.bar.position: top
 i3xrocks.warning: #E6E1CF
+
+#define color_base03   #1F2430
+#define color_base00   #CBCCC6
+
+wm.bar.position: top
+wm.bar.trayoutput: primary
+wm.bar.status_config: ~/.config/regolith3/i3status/config.toml
+wm.bar.workspace.inactive.border.color: color_base03
+wm.bar.workspace.inactive.background.color: color_base03
+wm.bar.workspace.inactive.text.color: color_base00
+
 regolith.look.path: /usr/share/regolith-look/lascaille
 regolith.wallpaper.file: /usr/share/regolith-look/lascaille/ESP_016895_1525_desktop.jpg
-wm.bar.status_config: ~/.config/regolith3/i3status/config.toml

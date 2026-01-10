@@ -9,15 +9,6 @@ block = "keyboard_layout"
 driver = "localebus"
 
 [[block]]
-block = "custom"
-cycle = ["echo ON", "echo OFF"]
-# on_click = "<command>"
-interval = 1
-[[block.click]]
-button = "left"
-action = "cycle"
-
-[[block]]
 block = "net"
 
 [[block]]
