@@ -281,6 +281,7 @@ install_apps() {
 	apt -y upgrade
 
 	apt install -y \
+		cliphist \
 		codium \
 		containerd.io \
 		docker-ce \
