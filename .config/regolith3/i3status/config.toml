@@ -1,5 +1,7 @@
 [theme]
 theme = "semi-native"
+[theme.overrides]
+separator=""
 
 [icons]
 icons = "awesome4"
@@ -13,7 +15,7 @@ block = "net"
 
 [[block]]
 block = "temperature"
-format = " $icon $max max "
+format = " $icon $max max"
 format_alt = " $icon $min min, $max max, $average avg "
 interval = 10
 chip = "*-isa-*"
@@ -41,7 +43,7 @@ format_alt = " $icon $barchart $frequency{ $boost|} "
 
 [[block]]
 block = "battery"
-format = " $icon\u2009 $percentage "
+format = "$icon\u2009 $percentage"
 missing_format = ""
 device = "DisplayDevice"
 driver = "upower"
@@ -57,7 +59,6 @@ cmd = "ilia -p notifications"
 [[block]]
 block = "sound"
 driver = "pulseaudio"
-
 [[block.click]]
 button = "left"
 cmd = "regolith-control-center sound"
@@ -65,11 +66,10 @@ cmd = "regolith-control-center sound"
 [[block]]
 block = "time"
 interval = 5
-#format = "\uf073 $timestamp.datetime(f:'%a-%d/%m/%y')"
-format = "\uf073 $timestamp.datetime(f:'%a %d %B')"
+format = "\uf073  $timestamp.datetime(f:'%a %d %B') "
 
 [[block]]
 block = "time"
 interval = 5
-format = "$icon $timestamp.datetime(f:'%R')"
+format = "$icon $timestamp.datetime(f:'%R') "
 
