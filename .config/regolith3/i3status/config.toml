@@ -1,7 +1,7 @@
 [theme]
 theme = "semi-native"
 [theme.overrides]
-separator=""
+separator=" "
 
 [icons]
 icons = "awesome4"
