@@ -1,5 +1,13 @@
 #!/bin/bash
 
+copy() {
+	if [ "$XDG_SESSION_DESKTOP" = "regolith-wayland" ]; then
+		wl-copy "$@"
+	else
+		xclip -selection clipboard "$@"
+	fi
+}
+
 # set KUBECONFIG based on the provided path
 eksport() {
 	if [ -z "$1" ]; then

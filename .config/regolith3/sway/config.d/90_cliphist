@@ -1,0 +1,6 @@
+# Clipboard
+exec wl-paste --watch cliphist store
+## Modify // Clipboard Manager // <> Alt m ##
+bindsym $mod+Alt+m exec 'cliphist list | ilia -p textlist | cliphist decode | wl-copy'
+## Modify // Clipboard Manager Delete Items // <> Alt Ctrl m ##
+bindsym $mod+Alt+Ctrl+m exec 'cliphist list | ilia -p textlist | cliphist delete'
